@@ -10,10 +10,9 @@ It allows library users to
 - See information about books including author, genre and review rating
 - Return books they have taken out
 - Leave reviews for books they return
-- If the user is indecisive, the application can choose a random book for the user to read, to expand their literature tastes
 
 It will also allow users to **search** through the library catalogue through categories like author and genre and read other user reviews that have been left, and will provide an average rating for the books, based on reviews. 
-The application will also have functionality to track users reading history and provide information on their reading habits like favourite/most-read book/author/genre. 
+The application will also have functionality to track users reading history. 
 
 This application would be used by library users at a library who are interested in taking out or donating books, or curious about others ratings of books.
 
