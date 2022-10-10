@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Library {
     // A library with a name,  with a collection of books,
-    // a list of members,the ability to borrow books, donate books, return books
+    // the ability to borrow books, donate books, return books
 
 
     // EFFECTS: creates a library with a name and list of books
@@ -19,8 +19,16 @@ public class Library {
     }
 
     // REQUIRES: book is able to be borrowed
-    // EFFECTS: Member borrows book from library
+    // MODIFIES: this, book, member
+    // EFFECTS: sets book to being borrowed, adds to members list of borrowed books
     public void borrowBook(Book book, Member member) {
+
+    }
+
+    // REQUIRES: book has been previously borrowed by member
+    // MODIFIES: this, book, member
+    // EFFECTS: sets book to not being borrowed, removes from members borrowed list and adds transaction to member
+    public void returnBook(Book book, Member member) {
 
     }
 
@@ -28,9 +36,6 @@ public class Library {
         return null;
     }
 
-    public List<Member> getMembers() {
-        return null;
-    }
 
     // EFFECTS: returns a list of all the genres of books in the library
     public List<String> getGenres() {
