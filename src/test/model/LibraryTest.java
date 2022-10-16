@@ -26,6 +26,8 @@ public class LibraryTest {
     private Member m3;
     private Member m4;
     private Member m5;
+    private Member admin;
+
     @BeforeEach
     public void setUp() {
         b1 = new Book("Art of War", "Classic", "Sun Tzu");
@@ -53,6 +55,8 @@ public class LibraryTest {
         m4 = new Member("L. Johnson");
         m5 = new Member("L. Johnson");
 
+       admin = lib.getMembers().get(0);
+
         lib.registerMember(m1);
         lib.registerMember(m2);
     }
@@ -60,6 +64,7 @@ public class LibraryTest {
     @Test
     public void testLibrary() {
         assertEquals(lib.getName(), "Little Library");
+        assertTrue(admin.isAdmin());
         assertEquals(lib.getBooks().size(),5);
         assertTrue(lib.getBooks().contains(b1));
         assertTrue(lib.getBooks().contains(b2));
@@ -69,8 +74,8 @@ public class LibraryTest {
     }
 
     @Test
-    public void testDonate() {
-    lib.donateBook(b6);
+    public void testRegisterBook() {
+    lib.registerBook(b6);
     assertEquals(lib.getBooks().size(),6);
     assertTrue(lib.getBooks().contains(b6));
     assertTrue(lib.getBooks().contains(b1));
@@ -81,9 +86,9 @@ public class LibraryTest {
     }
 
     @Test
-    public void testDonateTwice() {
-        lib.donateBook(b6);
-        lib.donateBook(b7);
+    public void testRegisterTwoBooks() {
+        lib.registerBook(b6);
+        lib.registerBook(b7);
         assertEquals(lib.getBooks().size(),7);
         assertTrue(lib.getBooks().contains(b7));
         assertTrue(lib.getBooks().contains(b6));
@@ -118,27 +123,40 @@ public class LibraryTest {
     public void testReturnBook() {
         lib.borrowBook(b3,m2);
         lib.returnBook(b3,m2);
+
         assertFalse(b3.isBorrowed());
         assertFalse(m2.isBorrowingBooks());
         assertEquals(m2.getBorrowedBooks().size(),0);
         assertEquals(m2.getTransactions().size(),1);
-        assertEquals(m2.getTransactions().get(0).getBook(), b3);
-        assertEquals(m2.getTransactions().get(0).getMember(), m2);
+
+        Transaction t = m2.getTransactions().get(0);
+
+        assertEquals(t.getBook(), b3);
+        assertEquals(t.getMember(), m2);
+
+        assertEquals(lib.getTransactions().size(),1);
+        assertEquals(lib.getTransactions().get(0), t);
     }
     @Test
-    public void testReturnBookTwoBooksReturnOne() {
+    public void testReturnBookBorrowTwoBooksReturnOne() {
         lib.borrowBook(b4, m2);
         lib.borrowBook(b5,m2);
         lib.returnBook(b4,m2);
+
         assertTrue(m2.isBorrowingBooks());
         assertFalse(b4.isBorrowed());
         assertTrue(b5.isBorrowed());
+
         assertEquals(m2.getBorrowedBooks().size(),1);
         assertTrue(m2.getBorrowedBooks().contains(b5));
-        assertEquals(m2.getTransactions().size(),1);
-        assertEquals(m2.getTransactions().get(0).getBook(), b4);
-        assertEquals(m2.getTransactions().get(0).getMember(), m2);
 
+        Transaction t = m2.getTransactions().get(0);
+        assertEquals(m2.getTransactions().size(),1);
+        assertEquals(t.getBook(), b4);
+        assertEquals(t.getMember(), m2);
+
+        assertEquals(lib.getTransactions().size(),1);
+        assertEquals(lib.getTransactions().get(0), t);
     }
     @Test
     public void testReturnBookTwoBooksReturnBoth() {
@@ -152,12 +170,20 @@ public class LibraryTest {
         assertFalse(m2.isBorrowingBooks());
         assertEquals(m2.getBorrowedBooks().size(),0);
 
-        assertEquals(m2.getTransactions().size(),2);
-        assertEquals(m2.getTransactions().get(0).getBook(), b4);
-        assertEquals(m2.getTransactions().get(0).getMember(), m2);
 
-        assertEquals(m2.getTransactions().get(1).getBook(), b5);
-        assertEquals(m2.getTransactions().get(1).getMember(), m2);
+        Transaction t1 = m2.getTransactions().get(0);
+        Transaction t2 = m2.getTransactions().get(1);
+
+        assertEquals(m2.getTransactions().size(),2);
+        assertEquals(t1.getBook(), b4);
+        assertEquals(t1.getMember(), m2);
+
+        assertEquals(t2.getBook(), b5);
+        assertEquals(t2.getMember(), m2);
+
+        assertEquals(lib.getTransactions().size(),2);
+        assertEquals(lib.getTransactions().get(0), t1);
+        assertEquals(lib.getTransactions().get(1), t2);
     }
 
     @Test
@@ -180,8 +206,8 @@ public class LibraryTest {
     }
     @Test
     public void testGetAuthorsSameAuthorTwice() {
-        lib.donateBook(b7);
-        lib.donateBook(b8);
+        lib.registerBook(b7);
+        lib.registerBook(b8);
         assertEquals(lib.getAuthors().size(),6);
         assertTrue(lib.getAuthors().contains("Fyodor Dostoevsky"));
         assertTrue(lib.getAuthors().contains("Steven Pinker"));
@@ -193,7 +219,7 @@ public class LibraryTest {
 
     @Test
     public void testRegisterMember() {
-        assertEquals(lib.getMembers().size(),2);
+        assertEquals(lib.getMembers().size(),3);
         assertTrue(lib.getMembers().contains(m1));
         assertTrue(lib.getMembers().contains(m2));
     }
@@ -202,13 +228,50 @@ public class LibraryTest {
         assertTrue(lib.registerMember(m3));
         assertTrue(lib.registerMember(m4));
         assertFalse(lib.registerMember(m5));
-        assertEquals(lib.getMembers().size(),4);
+        assertEquals(lib.getMembers().size(),5);
         assertTrue(lib.getMembers().contains(m1));
         assertTrue(lib.getMembers().contains(m2));
         assertTrue(lib.getMembers().contains(m3));
         assertTrue(lib.getMembers().contains(m4));
+    }
 
-
+    @Test
+    public void testGetAvailableBooksBorrowOneBook() {
+        assertEquals(lib.getAvailableBooks().size(),5);
+        assertTrue(lib.getAvailableBooks().contains(b1));
+        assertTrue(lib.getAvailableBooks().contains(b2));
+        assertTrue(lib.getAvailableBooks().contains(b3));
+        assertTrue(lib.getAvailableBooks().contains(b4));
+        assertTrue(lib.getAvailableBooks().contains(b5));
+        lib.borrowBook(b5, m1);
+        assertEquals(lib.getAvailableBooks().size(),4);
+        assertTrue(lib.getAvailableBooks().contains(b1));
+        assertTrue(lib.getAvailableBooks().contains(b2));
+        assertTrue(lib.getAvailableBooks().contains(b3));
+        assertTrue(lib.getAvailableBooks().contains(b4));
+        assertFalse(lib.getAvailableBooks().contains(b5));
+    }
+    @Test
+    public void testGetAvailableBooksRegisterBook() {
+        lib.registerBook(b6);
+        assertEquals(lib.getAvailableBooks().size(),6);
+        assertTrue(lib.getAvailableBooks().contains(b1));
+        assertTrue(lib.getAvailableBooks().contains(b2));
+        assertTrue(lib.getAvailableBooks().contains(b3));
+        assertTrue(lib.getAvailableBooks().contains(b4));
+        assertTrue(lib.getAvailableBooks().contains(b5));
+        assertTrue(lib.getAvailableBooks().contains(b6));
+    }
+    @Test
+    public void testGetAvailableBooksBorrowTwoBooks() {
+        lib.borrowBook(b5, m1);
+        lib.borrowBook(b4,m2);
+        assertEquals(lib.getAvailableBooks().size(),3);
+        assertTrue(lib.getAvailableBooks().contains(b1));
+        assertTrue(lib.getAvailableBooks().contains(b2));
+        assertTrue(lib.getAvailableBooks().contains(b3));
+        assertFalse(lib.getAvailableBooks().contains(b4));
+        assertFalse(lib.getAvailableBooks().contains(b5));
     }
 
 

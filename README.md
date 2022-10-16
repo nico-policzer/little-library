@@ -10,6 +10,7 @@ It allows library users to
 - See information about books including author, genre and review rating
 - Return books they have taken out
 - Leave reviews for books they return
+- Log in as an admin to register books and look at transaction history
 
 It will also allow users to **search** through the library catalogue through categories like author and genre and read other user reviews that have been left, and will provide an average rating for the books, based on reviews. 
 The application will also have functionality to track users reading history. 
@@ -24,6 +25,6 @@ The project also provides a fun challenge, with the functionality for users to l
 
 ## User Stories
 * As a user, I want to be able to borrow and then return a book from the library
-* As a user, I want to be able to donate my old books and add them to the librarys collection
+* As a user, I want to be able to register books to the library and see the general transaction history
 * As a user, I want to be able to read through reviews of books and see their overall rating
 * As a user, I want to be able to search through the librarys book collection by author, genre and rating

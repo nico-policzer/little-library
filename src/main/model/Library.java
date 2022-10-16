@@ -9,18 +9,27 @@ public class Library {
     private List<Book> books;
     private List<Member> members;
     private String name;
+    private List<Transaction> transactions;
 
-    // EFFECTS: creates a library with a name and list of books
+    // REQUIRES: books is non empty list
+    // EFFECTS: creates a library with a name and list of books, and a member named "admin"
     public Library(String name, List<Book> books) {
         this.books = books;
         this.name = name;
         members = new ArrayList<Member>();
+        transactions = new ArrayList<Transaction>();
+        members.add(new AdminMember());
     }
 
     // MODIFIES: this
     // EFFECTS: adds book to librarys collection
-    public void donateBook(Book book) {
+    public void registerBook(Book book) {
         books.add(book);
+    }
+
+    // EFFECTS: returns transaction history, ordered from least to most recent
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
     // REQUIRES: book is able to be borrowed, member is registered in library
@@ -33,11 +42,14 @@ public class Library {
 
     // REQUIRES: book has been previously borrowed by member, member is registered in library
     // MODIFIES: this, book, member
-    // EFFECTS: sets book to not being borrowed, removes from members borrowed list and adds transaction to member
+    // EFFECTS: sets book to not being borrowed, removes from members borrowed list and adds transactions
     public void returnBook(Book book, Member member) {
+        Transaction t = new Transaction(book, member);
         book.returnBook();
         member.returnBook(book);
-        member.addTransaction(new Transaction(book, member));
+        member.addTransaction(t);
+        transactions.add(t);
+
     }
 
     public List<Book> getBooks() {
@@ -68,6 +80,17 @@ public class Library {
         return authors;
     }
 
+    // EFFECTS: returns all books available to be borrowed(not currenty borrowed)
+    public List<Book> getAvailableBooks() {
+        List<Book> availableBooks = new ArrayList<>();
+        for (Book book: books) {
+            if (!book.isBorrowed()) {
+                availableBooks.add(book);
+            }
+        }
+        return availableBooks;
+    }
+
     public String getName() {
         return name;
     }
@@ -76,7 +99,7 @@ public class Library {
     // EFFECTS: returns true and registers member to library if no other member of same name exists, else returns false
     public Boolean registerMember(Member newMember) {
         for (Member m: members) {
-            if (m.getName() == newMember.getName()) {
+            if (m.getName().equals(newMember.getName())) {
                 return false;
             }
         }

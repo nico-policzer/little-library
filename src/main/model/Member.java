@@ -8,7 +8,7 @@ public class Member {
     // and information on the books they are currently borrowing, also able to borrow and return books.
 
 
-    private final String name;
+    protected final String name;
     private final List<Book> borrowedBooks;
     private final List<Transaction> transactions;
     private final List<Review> reviews;
@@ -72,6 +72,10 @@ public class Member {
     public void leaveReview(Review review) {
         reviews.add(review);
         review.getBook().addReview(review);
+    }
+
+    public boolean isAdmin() {
+        return false;
     }
 
 
