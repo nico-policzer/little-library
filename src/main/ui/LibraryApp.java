@@ -20,6 +20,9 @@ public class LibraryApp {
     private static final String SEARCH_BOOK_COMMAND = "search";
     private static final String QUIT_COMMAND = "quit";
     private static final String LOG_OUT_COMMAND = "log out";
+    private static final String CANCEL_COMMAND = "cancel";
+
+    private static final String UNKNOWN_COMMAND_MESSAGE = "Unrecognized command, please try a different command";
 
     private static final String BY_AUTHOR_COMMAND = "author";
     private static final String BY_TITLE_COMMAND = "all";
@@ -38,7 +41,8 @@ public class LibraryApp {
 
 
     // TODO: organize code so it is organized by menu
-    // TODO: complete CLEAR specifications for all methods
+    // TODO: complete CLEAR specifications for all methods, add modifies clauses to ALMOST EVERYTHING
+    // anything that changes any fields
     // EFFECTS: runs library app
     public LibraryApp() {
         runLibrary();
@@ -69,29 +73,28 @@ public class LibraryApp {
     // EFFECTS: runs sign in menu allowing users to register as a new member or sign in as previous members, or quit
     // and stop the program. returns true if member signs in and false if they quit
     private boolean handleLogOn() {
-        boolean quit = false;
-        while (!quit) {
+        while (true) {
+            boolean loggedIn = false;
             displaysWelcomeMenu();
             String command = getUserInputString();
             if (command.length() > 0) {
                 switch (command) {
                     case REGISTER_MEMBER_COMMAND:
-                        if (handleNewMember()) {
-                            return true;
-                        }
+                        loggedIn = handleNewMember();
                         break;
                     case SIGN_IN_COMMAND:
-                        if (handleSignIn()) {
-                            return true;
-                        }
+                        loggedIn = handleSignIn();
                         break;
                     case QUIT_COMMAND:
-                        quit = true;
-                        break;
+                        return false;
+                    default:
+                        System.out.println(UNKNOWN_COMMAND_MESSAGE);
+                }
+                if (loggedIn) {
+                    return true;
                 }
             }
         }
-        return false;
     }
 
     private void end() {
@@ -100,7 +103,6 @@ public class LibraryApp {
     }
 
     private void displaysWelcomeMenu() {
-        clear();
         System.out.println("\nWelcome to " + lib.getName());
         System.out.println(REGISTER_MEMBER_COMMAND + ": register a new member");
         System.out.println(SIGN_IN_COMMAND + ": sign in as returning member");
@@ -137,7 +139,7 @@ public class LibraryApp {
     // EFFECTS:
     private boolean handleNewMember() {
         System.out.println("Please enter your name to register:");
-        String memberName = input.nextLine();
+        String memberName = capitalize(getUserInputString());
         Member registeredMember =  new Member(memberName);
         if (lib.registerMember(registeredMember)) {
             System.out.println("Registering " + memberName + " to " + lib.getName());
@@ -170,19 +172,38 @@ public class LibraryApp {
                     case LOG_OUT_COMMAND:
                         logOut = true;
                         break;
+                    default:
+                        System.out.println(UNKNOWN_COMMAND_MESSAGE);
                 }
             }
         }
     }
 
-    // TODO: finish register book handling. should ask for title(needs to check against all
-    //  other titles in PRETTY STRING, title doesn't need to be in any specific format, just can't be the
-    //  same as other titles). Then ask for author(use capitalize method for name), then genre(also capitilze)
     // EFFECTS: registers a new book to library's collection. Won't accept books with titles already in the collection
     private void handleRegisterBook() {
-        System.out.println("Please input the title of the book:");
+        System.out.println("\nPlease input the title of the book:");
         if (input.hasNext()) {
-            String title = input.nextLine();
+            String newTitle = input.nextLine();
+            // cannot register books with title "back" as it would interfere with commands during search and returns
+            boolean validTitle = !makePrettyString(newTitle).equals(BACK_COMMAND);
+            for (Book book: lib.getBooks()) {
+                if (makePrettyString(newTitle).equals(makePrettyString(book.getTitle()))) {
+                    validTitle = false;
+                }
+            }
+            if (validTitle) {
+                System.out.println("Please input the author's name");
+                String author = capitalize(getUserInputString());
+                System.out.println("Please input the genre to categorize this book in");
+                String genre = capitalize(getUserInputString());
+                lib.registerBook(new Book(newTitle, genre, author));
+                System.out.println("Registering " + newTitle
+                                    + " by " + author + " at "
+                                    + lib.getName() + " under " + genre);
+            } else {
+                System.out.println("We cannot register this book as we already have"
+                                    + " a book of that title, or the title is invalid");
+            }
         }
     }
 
@@ -192,19 +213,72 @@ public class LibraryApp {
             System.out.println(transaction.getMember().getName() + " : " + transaction.getBook().getTitle());
         }
     }
+
     private void displayAdminMenu() {
         System.out.println("LIBRARY ADMIN MENU:");
-        System.out.println(REGISTER_MEMBER_COMMAND + ": to register a new book to the library");
+        System.out.println(REGISTER_BOOK_COMMAND + ": to register a new book to the library");
         System.out.println(VIEW_TRANSACTIONS_COMMAND + ": to view all the librarys past transactions");
         System.out.println(LOG_OUT_COMMAND + ": to log out");
     }
-
+    
     // EFFECTS: displays currently borrowed books and allowed to choose one to return
     private void returnBook() {
-        System.out.println("Return book menu!");
+        displayBorrowedBooks();
+        System.out.println("Please input the title of the book you'd like to return, or go back");
+        String title = getUserInputString();
+        Book bookReturned = null;
+        boolean returnedABook = false;
+        for (Book book : member.getBorrowedBooks()) {
+            if (makePrettyString(book.getTitle()).equals(title)) {
+                bookReturned = book;
+                returnedABook = true;
+            }
+        }
+        if (returnedABook) {
+            lib.returnBook(bookReturned, member);
+            System.out.println("Returned " + bookReturned.getTitle());
+            handleReview(bookReturned);
+        } else {
+            System.out.println("You are not currently borrowing a book of that title!");
+        }
     }
 
+    private void handleReview(Book book) {
+        boolean cancel = false;
+        while (!cancel) {
+            displaysReviewMenu();
+            String command = getUserInputString();
+            if (command.matches("[1-5]")) {
+                System.out.println("Write a comment");
+                String comment = input.nextLine();
+                int rating = Integer.parseInt(command);
+                book.addReview(new Review(book, member, rating, comment));
+                System.out.println("Review added. Thank you for your rating.");
+                cancel = true;
+            } else if (command.equals(CANCEL_COMMAND)) {
+                cancel = true;
+            } else {
+                System.out.println("Please input a digit from 1 to 5, or cancel this review process");
+            }
 
+        }
+    }
+
+    private void displaysReviewMenu() {
+        System.out.println("Please enter a rating between 1 to 5 for this book");
+        System.out.println(CANCEL_COMMAND + ": or cancel this review process");
+    }
+
+        // ask book to return(title)
+
+        // ASK FOR RATING(loop until int 1-5)
+
+        // ASK FOR COMMENT(anything)
+        // maybe ask for a double check of review before submitting, then ask for submit
+
+
+    // TODO: add default functionality for ALL menus with
+    //  inputs saying "Sorry I didn't understand that, please try again"
     // EFFECTS: runs book searching process, allows users to search through books by genre or author, choose a book by
     // title to view info about and decide to borrow or not
     private void searchMenu() {
@@ -225,6 +299,9 @@ public class LibraryApp {
                         break;
                     case (BACK_COMMAND):
                         back = true;
+                        break;
+                    default:
+                        System.out.println(UNKNOWN_COMMAND_MESSAGE);
                 }
             }
         }
@@ -394,6 +471,8 @@ public class LibraryApp {
                 case(VIEW_RATINGS_COMMAND):
                     displayReviews(book);
                     break;
+                default:
+                    System.out.println(UNKNOWN_COMMAND_MESSAGE);
             }
         }
     }
@@ -430,10 +509,7 @@ public class LibraryApp {
     // EFFECTS: displays transaction history and currently borrowed books of member
     private void infoMenu() {
         if (member.isBorrowingBooks()) {
-            System.out.println(member.getName() + "'s currently borrowed books:");
-            for (Book book: member.getBorrowedBooks()) {
-                System.out.println("- " + book.getTitle());
-            }
+            displayBorrowedBooks();
         } else {
             System.out.println(member.getName() + " is not currently borrowing any books");
         }
@@ -443,12 +519,18 @@ public class LibraryApp {
         }
     }
 
+    private void displayBorrowedBooks() {
+        System.out.println(member.getName() + "'s currently borrowed books:");
+        for (Book book: member.getBorrowedBooks()) {
+            System.out.println("- " + book.getTitle());
+        }
+    }
+
     // TODO: make all the spacing between menus the same(use clear or just one space)
 
     // EFFECTS: displays and processes main menu options for members allowing user to borrow a book, return a book,
     // display info about their history, or quit back to sign in
     private void mainMenu() {
-        clear();
         boolean logOut = false;
         while (!logOut) {
             displayMainMenu();
@@ -467,6 +549,8 @@ public class LibraryApp {
                     case LOG_OUT_COMMAND:
                         logOut = true;
                         break;
+                    default:
+                        System.out.println(UNKNOWN_COMMAND_MESSAGE);
                 }
             }
         }
@@ -474,7 +558,7 @@ public class LibraryApp {
 
     // EFFECTS: prints out main menu options
     private void displayMainMenu() {
-        System.out.println(lib.getName());
+        System.out.println("\n" + lib.getName());
         System.out.println("\nlogged in as: " + member.getName());
         System.out.println(SEARCH_BOOK_COMMAND + ": search through catalogue to borrow a book");
         System.out.println(RETURN_BOOK_COMMAND + ": seturn books you've previously borrowed");
