@@ -12,8 +12,6 @@ public class Book {
     private final List<Review> reviews;
     private Boolean isBorrowed;
 
-    // REQUIRES: Genre is one of
-    // ("Classic", "Romance", "Science", "Sci-fi", "Fantasy", "Foreign Language", "Mystery", "History", "War")
     // EFFECTS: creates a book with title by author of genre
     public Book(String title, String genre, String author) {
         this.title = title;

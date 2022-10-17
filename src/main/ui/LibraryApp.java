@@ -685,5 +685,4 @@ public class LibraryApp {
         }
         return String.valueOf(charArray);
     }
-
 }
