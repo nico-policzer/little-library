@@ -52,7 +52,6 @@ public class Book {
     // EFFECTS: returns book, now not being borrowed
     public void returnBook() {
         isBorrowed = false;
-
     }
 
     // EFFECTS: returns all reviews previously left on book
@@ -70,12 +69,10 @@ public class Book {
         if (reviews.size() == 0) {
             return 0;
         }
-
         int rating = 0;
-        for (Review review: reviews) {
+        for (Review review : reviews) {
             rating += review.getRating();
         }
-
         return rating / reviews.size();
     }
 }

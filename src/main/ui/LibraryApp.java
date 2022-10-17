@@ -5,8 +5,10 @@ import model.*;
 import java.util.*;
 
 // SOURCES:
-// Used to create a helper method to capitilze the start of each word in a string
-// - https://www.programiz.com/java-programming/examples/capitalize-first-character-of-string
+// https://www.programiz.com/java-programming/examples/capitalize-first-character-of-string
+// - Used to create a helper method to capitilze the start of each word in a string
+// FitLifeGymChainUi
+// - Used makePrettyString and getUserInputString, as well as inspiration for menu design using switch statements
 
 
 public class LibraryApp {
@@ -21,7 +23,7 @@ public class LibraryApp {
     private Library lib;
     private Member member;
     private Scanner input;
-
+    // COMMANDS:
     private static final String UNKNOWN_COMMAND_MESSAGE = "\tUnrecognized command, please try a different command";
     // LOG IN MENU COMMANDS
     private static final String REGISTER_MEMBER_COMMAND = "register";
@@ -76,7 +78,7 @@ public class LibraryApp {
         input.useDelimiter("\n");
     }
 
-    // EFFECTS: initialzes the initial catalogue of books
+    // EFFECTS: initializes the initial catalogue of books
     private List<Book> initialzeBooks() {
         Book b0 = new Book("The Four Agreements", "Self-Help", "Don Miguel Ruiz");
         Book b1 = new Book("Art of War", "Classic", "Sun Tzu");
@@ -97,7 +99,7 @@ public class LibraryApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: intializes library, starts login menu, and directs logged in user to proper menu(admin or main)
+    // EFFECTS: initializes library, starts login menu, and directs logged-in user to proper menu(admin or main)
     private void runLibrary() {
         boolean run = true;
         initializeLibrary();

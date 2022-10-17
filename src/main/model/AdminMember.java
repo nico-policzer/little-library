@@ -6,10 +6,12 @@ public class AdminMember extends Member {
 
     private boolean isAdmin;
 
+    // EFFECTS: creates an admin member, a member of name "admin"
     public AdminMember() {
         super("admin");
     }
 
+    // EFFECTS: returns true to reflect this is an admin member
     @Override
     public boolean isAdmin() {
         return true;

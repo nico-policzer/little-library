@@ -74,6 +74,7 @@ public class Member {
         review.getBook().addReview(review);
     }
 
+    // EFFECTS: returns false to reflect that the member is not an admin member
     public boolean isAdmin() {
         return false;
     }
