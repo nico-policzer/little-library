@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    // A library with a name,  with a collection of books,
-    // the ability to borrow books, donate books, return books
+    // LIBRARY: A library with a name,  with a collection of books,
+    // the ability to borrow books, register books and return books
     private List<Book> books;
     private List<Member> members;
     private String name;
@@ -99,7 +99,7 @@ public class Library {
     // EFFECTS: returns true and registers member to library if no other member of same name exists, else returns false
     public Boolean registerMember(Member newMember) {
         for (Member m: members) {
-            if (m.getName().equals(newMember.getName())) {
+            if (makePrettyString(m.getName()).equals(makePrettyString(newMember.getName()))) {
                 return false;
             }
         }
@@ -112,4 +112,12 @@ public class Library {
     }
 
 
+    // EFFECTS: removes white space and quotation marks around s
+    // from fitLifeGym UI
+    private String makePrettyString(String s) {
+        s = s.toLowerCase();
+        s = s.trim();
+        s = s.replaceAll("\"|'", "");
+        return s;
+    }
 }

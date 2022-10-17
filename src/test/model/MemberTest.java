@@ -37,6 +37,9 @@ public class MemberTest {
     }
     @Test
     public void testMember() {
+        assertFalse(m1.isAdmin());
+        assertFalse(m2.isAdmin());
+
         assertEquals(m1.getName(), "James Curtis");
         assertEquals(m2.getName(), "Jimmy Kimmel");
 

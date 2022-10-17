@@ -1,8 +1,8 @@
 package model;
 
 public class Review {
-    // A book review with a star rating from 1-5, a comment,
-    // and knownledge of the member who left the review and the book it is about.
+    // REVIEW: A book review with a star rating from 1-5, a comment,
+    // and the member who left the review and the book it is about.
 
 
     private final Book book;

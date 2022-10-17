@@ -6,7 +6,6 @@ This project is an application for a librarys system.
 
 It allows library users to
 - Borrow books
-- Donate their old books
 - See information about books including author, genre and review rating
 - Return books they have taken out
 - Leave reviews for books they return

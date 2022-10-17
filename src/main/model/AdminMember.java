@@ -1,7 +1,8 @@
 package model;
 
 public class AdminMember extends Member {
-    // an admin member who can only register books and view the transaction history of the library
+    // ADMIN MEMBER:
+    // an admin member who is identified as admin, with name "admin". has access to admin menu in library app
 
     private boolean isAdmin;
 

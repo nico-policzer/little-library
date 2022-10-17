@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
-    // A book with a title, genre, author, reviews, average rating
+    // BOOK: A book with a title, genre, author, reviews, average rating
     // and information about whether it is being borrowed or not
     private final String genre;
     private final String author;
