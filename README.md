@@ -25,5 +25,7 @@ The project also provides a fun challenge, with the functionality for users to l
 * As a user, I want to be able to register books to the library and see the general transaction history
 * As a user, I want to be able to read through reviews of books and see their overall rating
 * As a user, I want to be able to search through the librarys book collection by author, genre and rating
+* As a user, I want the library to save it's state of books and members when it closes
+* As a user, when I open the library, I want it to load the previous state of the library
 
 NOTE: To access the admin menu to register books and view the libraries' history, please sign in as member "admin"
