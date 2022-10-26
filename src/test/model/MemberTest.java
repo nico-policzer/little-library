@@ -28,8 +28,8 @@ public class MemberTest {
         b1 = new Book("The Orenda", "History", "Joseph Boyden");
         b2 = new Book("The Computer and the Brain", "Science", "von Neumann");
 
-        t1 = new Transaction(b1, m3);
-        t2 = new Transaction(b2, m3);
+        t1 = new Transaction(b1.getTitle(), m3.getName());
+        t2 = new Transaction(b2.getTitle(), m3.getName());
 
         r1 = new Review(b1, m3, 4, "Not a bedtime read.");
         r2 = new Review(b2, m3, 5, "Mind blowing");
@@ -73,27 +73,27 @@ public class MemberTest {
 
     @Test
     public void testLeaveReview() {
-        assertEquals(r1.getBook().getReviews().size(),0);
-        m3.leaveReview(r1);
+        assertEquals(b1.getReviews().size(),0);
+        m3.leaveReview(b1, r1);
 
-        assertEquals(r1.getBook().getReviews().size(),1);
-        assertTrue(r1.getBook().getReviews().contains(r1));
+        assertEquals(b1.getReviews().size(),1);
+        assertTrue(b1.getReviews().contains(r1));
 
         assertEquals(m3.getReviews().size(),1);
         assertTrue(m3.getReviews().contains(r1));
     }
     @Test
     public void testLeaveReviewTwice() {
-        m3.leaveReview(r1);
-        m3.leaveReview(r2);
+        m3.leaveReview(b1, r1);
+        m3.leaveReview(b2, r2);
         assertEquals(m3.getReviews().size(),2);
         assertTrue(m3.getReviews().contains(r1));
         assertTrue(m3.getReviews().contains(r2));
     }
     @Test
     public void testLeaveReviewTwiceOnBook() {
-        m3.leaveReview(r1);
-        m4.leaveReview(r3);
+        m3.leaveReview(b1, r1);
+        m4.leaveReview(b1, r3);
         assertEquals(b1.getReviews().size(),2);
         assertTrue(b1.getReviews().contains(r1));
         assertTrue(b1.getReviews().contains(r3));

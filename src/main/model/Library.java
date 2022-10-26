@@ -44,7 +44,7 @@ public class Library {
     // MODIFIES: this, book, member
     // EFFECTS: sets book to not being borrowed, removes from members borrowed list and adds transactions
     public void returnBook(Book book, Member member) {
-        Transaction t = new Transaction(book, member);
+        Transaction t = new Transaction(book.getTitle(), member.getName());
         book.returnBook();
         member.returnBook(book);
         member.addTransaction(t);

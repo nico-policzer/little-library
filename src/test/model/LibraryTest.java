@@ -131,8 +131,8 @@ public class LibraryTest {
 
         Transaction t = m2.getTransactions().get(0);
 
-        assertEquals(t.getBook(), b3);
-        assertEquals(t.getMember(), m2);
+        assertEquals(t.getBook(), b3.getTitle());
+        assertEquals(t.getMember(), m2.getName());
 
         assertEquals(lib.getTransactions().size(),1);
         assertEquals(lib.getTransactions().get(0), t);
@@ -152,8 +152,8 @@ public class LibraryTest {
 
         Transaction t = m2.getTransactions().get(0);
         assertEquals(m2.getTransactions().size(),1);
-        assertEquals(t.getBook(), b4);
-        assertEquals(t.getMember(), m2);
+        assertEquals(t.getBook(), b4.getTitle());
+        assertEquals(t.getMember(), m2.getName());
 
         assertEquals(lib.getTransactions().size(),1);
         assertEquals(lib.getTransactions().get(0), t);
@@ -175,11 +175,11 @@ public class LibraryTest {
         Transaction t2 = m2.getTransactions().get(1);
 
         assertEquals(m2.getTransactions().size(),2);
-        assertEquals(t1.getBook(), b4);
-        assertEquals(t1.getMember(), m2);
+        assertEquals(t1.getBook(), b4.getTitle());
+        assertEquals(t1.getMember(), m2.getName());
 
-        assertEquals(t2.getBook(), b5);
-        assertEquals(t2.getMember(), m2);
+        assertEquals(t2.getBook(), b5.getTitle());
+        assertEquals(t2.getMember(), m2.getName());
 
         assertEquals(lib.getTransactions().size(),2);
         assertEquals(lib.getTransactions().get(0), t1);

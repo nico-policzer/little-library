@@ -71,9 +71,9 @@ public class LibraryApp {
         lib.returnBook(initialBooks.get(0),m2);
         lib.borrowBook(initialBooks.get(8),m3);
         lib.returnBook(initialBooks.get(8),m3);
-        m3.leaveReview(new Review(initialBooks.get(8), m1,
+        m3.leaveReview(initialBooks.get(8), new Review(initialBooks.get(8), m1,
                 2, "Way to convoluted. Characters have four names each, impossible to follow"));
-        m2.leaveReview(new Review(initialBooks.get(0), m2, 5, "Book changed my life."));
+        m2.leaveReview(initialBooks.get(0), new Review(initialBooks.get(0), m2, 5, "Book changed my life."));
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -274,7 +274,7 @@ public class LibraryApp {
     private void handleViewTransactions() {
         System.out.println("\n" + lib.getName() + " transaction history");
         for (Transaction transaction: lib.getTransactions()) {
-            System.out.println(transaction.getMember().getName() + " : " + transaction.getBook().getTitle());
+            System.out.println(transaction.getMember() + " : " + transaction.getBook());
         }
     }
 
@@ -560,7 +560,7 @@ public class LibraryApp {
             System.out.println("No ratings/reviews have been left for this book.");
         }
         for (Review review: book.getReviews()) {
-            System.out.println(review.getMember().getName()
+            System.out.println(review.getMember()
                     + " gave " + review.getRating() + " out of 5 stars");
             System.out.println("\t" + "\"" + review.getComment() + "\"");
         }
@@ -605,7 +605,7 @@ public class LibraryApp {
                 System.out.println("Write a comment");
                 String comment = input.nextLine();
                 int rating = Integer.parseInt(command);
-                member.leaveReview(new Review(book, member, rating, comment));
+                member.leaveReview(book, new Review(book, member, rating, comment));
                 System.out.println("Review added. Thank you for your rating.");
                 cancel = true;
             } else if (command.equals(CANCEL_COMMAND)) {
@@ -629,7 +629,7 @@ public class LibraryApp {
         if (!member.getTransactions().isEmpty()) {
             System.out.println("Returned books");
             for (Transaction transaction : member.getTransactions()) {
-                System.out.println("- " + transaction.getBook().getTitle());
+                System.out.println("- " + transaction.getBook());
             }
         } else {
             System.out.println("No returned books to display.");

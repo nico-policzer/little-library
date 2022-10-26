@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 
-import model.Book;
-import model.Library;
+import model.*;
 import org.json.*;
 
 // Represents a reader that reads workroom from JSON data stored in file
@@ -48,14 +48,53 @@ public class JsonReader {
 
     }
 
+    // EFFECTS: parses book from JSON object and returns it
+    private Book parseBook(JSONObject jsonObject) {
+        return null;
+    }
+
+
+    // EFFECTS: adds reviews to book from JSON object
+    private void addReviews(Book book, JSONObject jsonObject) {
+
+    }
+
+    // EFFECTS: parses review from JSON object and returns it
+    private Review parseReview(JSONObject jsonObject) {
+        return null;
+    }
+
+
     // EFFECTS: adds members to library from JSON object
     private void addMembers(Library lib, JSONObject jsonObject) {
 
     }
 
-
-    // EFFECTS: parses book from JSON object and returns it
-    private Book parseBook(JSONObject jsonObject) {
+    // EFFECTS: parses member from JSON object and returns it
+    private Member parseMember(JSONObject json, List<Book> booksList) {
         return null;
     }
+
+    // EFFECTS: adds books to m's currently borrowed list from index relative to booksList in jsonObject
+    private void addMemberBooks(Member m, JSONObject jsonObject, List<Book> booksList) {
+
+    }
+
+    // EFFECTS: adds transactions to library from JSON object
+    private void addTransactions(Library lib, JSONObject jsonObject) {
+
+    }
+
+    // EFFECTS: adds transactions to member from JSON object
+    private void addTransactions(Member m, JSONObject jsonObject) {
+
+    }
+
+    // EFFECTS: parses transaction from JSON object and returns it
+    private Transaction parseTransaction(JSONObject jsonObject) {
+        return null;
+    }
+
+
+
 }

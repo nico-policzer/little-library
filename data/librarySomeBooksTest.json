@@ -1,0 +1,42 @@
+{
+      "name": "Nico's library",
+      "books": [
+        {
+          "title": "Brothers Karamazov",
+          "genre": "Classic",
+          "author": "Fyodor Dostoevsky",
+          "isBorrowed": false,
+          "reviews": []
+        },
+        {
+          "title": "A Tale of Two Cities",
+          "genre": "Classic",
+          "author": "Charles Dickens",
+          "isBorrowed": false,
+          "reviews": []
+        },
+        {
+          "title": "Violeta: se fue a los cielos",
+          "genre": "Foreign Language",
+          "author": "Angel Parra",
+          "isBorrowed": false,
+          "reviews": []
+        },
+        {
+          "title": "Stalingrad",
+          "genre": "War",
+          "author": "Antony Beevor",
+          "isBorrowed": false,
+          "reviews": []
+        },
+        {
+          "title": "The Sun also Rises",
+          "genre": "Classic",
+          "author": "Ernest Hemingway",
+          "isBorrowed": false,
+          "reviews": []
+        }
+      ],
+      "members":[],
+      "transactions": []
+}

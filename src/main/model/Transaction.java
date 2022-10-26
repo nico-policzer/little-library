@@ -2,22 +2,22 @@ package model;
 
 public class Transaction {
     // TRANSACTION: A transaction, recording a member who returned a book
-    private final Book book;
-    private final Member member;
+    private final String bookTitle;
+    private final String memberName;
 
     // REQUIRES: book must be returned
     // EFFECTS: creates a transaction recording member who return book
-    public Transaction(Book book, Member member) {
-        this.book = book;
-        this.member = member;
+    public Transaction(String title, String memberName) {
+        bookTitle = title;
+        this.memberName = memberName;
     }
 
-    public Book getBook() {
-        return book;
+    public String getBook() {
+        return bookTitle;
     }
 
-    public Member getMember() {
-        return member;
+    public String getMember() {
+        return memberName;
     }
 }
 

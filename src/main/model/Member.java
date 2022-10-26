@@ -69,9 +69,9 @@ public class Member {
 
     // MODIFIES: this, book
     // EFFECTS: leaves a review on book that was just returned by member, adds to members review history
-    public void leaveReview(Review review) {
+    public void leaveReview(Book book, Review review) {
         reviews.add(review);
-        review.getBook().addReview(review);
+        book.addReview(review);
     }
 
     // EFFECTS: returns false to reflect that the member is not an admin member
