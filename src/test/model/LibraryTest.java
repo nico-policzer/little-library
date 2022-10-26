@@ -74,6 +74,28 @@ public class LibraryTest {
     }
 
     @Test
+    public void testLibraryOtherCons() {
+        List<Member> members = new ArrayList<>();
+        members.add(m1);
+        members.add(m2);
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(new Transaction("The lord of the rings", "J. James Jamerson"));
+        Library lib = new Library("Little Library", books, members, transactions);
+        assertEquals(lib.getName(), "Little Library");
+        assertTrue(lib.getMembers().get(0).isAdmin());
+        assertEquals(lib.getMembers().size(), 3);
+        assertEquals(lib.getMembers().get(1), m1);
+        assertEquals(lib.getMembers().get(2), m2);
+        assertEquals(lib.getBooks().size(),5);
+        assertTrue(lib.getBooks().contains(b1));
+        assertTrue(lib.getBooks().contains(b2));
+        assertTrue(lib.getBooks().contains(b3));
+        assertTrue(lib.getBooks().contains(b4));
+        assertTrue(lib.getBooks().contains(b5));
+        assertEquals(lib.getTransactions(),transactions);
+    }
+
+    @Test
     public void testRegisterBook() {
     lib.registerBook(b6);
     assertEquals(lib.getBooks().size(),6);
@@ -273,6 +295,7 @@ public class LibraryTest {
         assertFalse(lib.getAvailableBooks().contains(b4));
         assertFalse(lib.getAvailableBooks().contains(b5));
     }
+
 
 
 

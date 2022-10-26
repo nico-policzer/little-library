@@ -1,0 +1,94 @@
+{
+  "name": "TEST LIBRARY",
+  "books": [
+    {
+      "title": "Brothers Karamazov",
+      "genre": "Classic",
+      "author": "Fyodor Dostoevsky",
+      "isBorrowed": true,
+      "reviews": []
+    },
+    {
+      "title": "A Tale of Two Cities",
+      "genre": "Classic",
+      "author": "Charles Dickens",
+      "isBorrowed": true,
+      "reviews": []
+    },
+    {
+      "title": "Violeta: se fue a los cielos",
+      "genre": "Foreign Language",
+      "author": "Angel Parra",
+      "isBorrowed": false,
+      "reviews": [
+        {
+          "book": "Violeta: se fue a los cielos",
+          "member": "G. Foreman",
+          "rating": 3,
+          "comment": "Great read!"
+        }
+      ]
+    },
+    {
+      "title": "Stalingrad",
+      "genre": "War",
+      "author": "Antony Beevor",
+      "isBorrowed": true,
+      "reviews": []
+    },
+    {
+      "title": "The Sun also Rises",
+      "genre": "Classic",
+      "author": "Ernest Hemingway",
+      "isBorrowed": false,
+      "reviews": []
+    }
+  ],
+  "members":[
+    {
+      "name": "D. Fiddle",
+      "borrowedBooks": [0,1],
+      "reviews": [],
+      "transactions": [
+        {
+          "book":"The Sun also Rises",
+          "member":"D. Fiddle"
+        }
+      ]
+    },
+    {
+      "name": "G. Foreman",
+      "borrowedBooks": [],
+      "reviews": [
+        {
+          "book": "Violeta: se fue a los cielos",
+          "member": "G. Foreman",
+          "rating": 3,
+          "comment": "Great read!"
+        }
+      ],
+      "transactions": [
+        {
+          "book": "Violeta: se fue a los cielos",
+          "member": "G. Foreman"
+        }
+      ]
+    },
+    {
+      "name": "J. Johnson",
+      "borrowedBooks": [3],
+      "reviews": [],
+      "transactions": []
+    }
+  ],
+  "transactions": [
+    {
+      "book":"The Sun also Rises",
+      "member":"D. Fiddle"
+    },
+    {
+      "book": "Violeta: se fue a los cielos",
+      "member": "G. Foreman"
+    }
+  ]
+}

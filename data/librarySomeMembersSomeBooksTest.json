@@ -2,17 +2,17 @@
       "name": "TEST LIBRARY",
       "books": [
         {
-          "title": "Brothers Karamazov",
-          "genre": "Classic",
-          "author": "Fyodor Dostoevsky",
-          "isBorrowed": false,
-          "reviews": []
-        },
+        "title": "Brothers Karamazov",
+        "genre": "Classic",
+        "author": "Fyodor Dostoevsky",
+        "isBorrowed": true,
+        "reviews": []
+      },
         {
           "title": "A Tale of Two Cities",
           "genre": "Classic",
           "author": "Charles Dickens",
-          "isBorrowed": false,
+          "isBorrowed": true,
           "reviews": []
         },
         {
@@ -26,7 +26,7 @@
           "title": "Stalingrad",
           "genre": "War",
           "author": "Antony Beevor",
-          "isBorrowed": false,
+          "isBorrowed": true,
           "reviews": []
         },
         {
@@ -37,6 +37,25 @@
           "reviews": []
         }
       ],
-      "members":[],
+      "members":[
+        {
+              "name": "D. Fiddle",
+              "borrowedBooks": [0,1],
+              "reviews": [],
+              "transactions": []
+        },
+        {
+          "name": "G. Foreman",
+          "borrowedBooks": [],
+          "reviews": [],
+          "transactions": []
+        },
+        {
+          "name": "J. Johnson",
+          "borrowedBooks": [3],
+          "reviews": [],
+          "transactions": []
+        }
+      ],
       "transactions": []
 }

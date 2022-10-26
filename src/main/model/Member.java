@@ -21,6 +21,13 @@ public class Member {
         reviews = new ArrayList<Review>();
     }
 
+    public Member(String name, List<Book> borrowedBooks, List<Review> reviews, List<Transaction> transactions) {
+        this.name = name;
+        this.borrowedBooks = borrowedBooks;
+        this.reviews = reviews;
+        this.transactions = transactions;
+    }
+
 
     public String getName() {
         return name;

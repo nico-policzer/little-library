@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MemberTest {
@@ -54,6 +57,28 @@ public class MemberTest {
 
         assertEquals(m1.getBorrowedBooks().size(), 0);
         assertEquals(m2.getBorrowedBooks().size(),0);
+
+    }
+
+    @Test
+    public void testMemberFullConstructor() {
+        List<Book> borrowedBooks = new ArrayList<>();
+        borrowedBooks.add(b1);
+        borrowedBooks.add(b2);
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(t1);
+        transactions.add(t2);
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(r1);
+        reviews.add(r2);
+
+        Member m0 = new Member("Aunt Tim", borrowedBooks, reviews , transactions);
+        assertEquals(m0.getName(), "Aunt Tim");
+        assertEquals(m0.getBorrowedBooks(), borrowedBooks);
+        assertEquals(m0.getReviews(), reviews);
+        assertEquals(m0.getTransactions(), transactions);
+
+
 
     }
 

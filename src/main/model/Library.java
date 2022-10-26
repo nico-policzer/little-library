@@ -21,6 +21,15 @@ public class Library {
         members.add(new AdminMember());
     }
 
+    // EFFECTS: creates a library with name, list of books, members, and transactions
+    public Library(String name, List<Book> books, List<Member> members, List<Transaction> transactions) {
+        this.books = books;
+        this.name = name;
+        this.members = members;
+        this.transactions = transactions;
+        this.members.add(0,new AdminMember());
+    }
+
     // MODIFIES: this
     // EFFECTS: adds book to librarys collection
     public void registerBook(Book book) {
@@ -120,4 +129,7 @@ public class Library {
         s = s.replaceAll("\"|'", "");
         return s;
     }
+
+
+
 }

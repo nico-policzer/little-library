@@ -22,6 +22,14 @@ public class Book {
 
     }
 
+    public Book(String title, String genre, String author, Boolean isBorrowed, List<Review> reviews) {
+        this.title = title;
+        this.genre = genre;
+        this.author = author;
+        this.reviews = reviews;
+        this.isBorrowed = isBorrowed;
+    }
+
     public String getTitle() {
         return title;
     }

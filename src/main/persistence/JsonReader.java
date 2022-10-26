@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -40,59 +41,96 @@ public class JsonReader {
 
     // EFFECTS: parses library from JSON object and returns it
     private Library parseLibrary(JSONObject jsonObject) {
-        return null;
+        String name = jsonObject.getString("name");
+        List<Book> books = getBooks(jsonObject.getJSONArray("books"));
+        List<Member> members = getMembers(jsonObject.getJSONArray("members"), books);
+        List<Transaction> transactions = getTransactions(jsonObject.getJSONArray("transactions"));
+        return new Library(name, books, members, transactions);
     }
 
-    // EFFECTS: adds books to library from JSON object
-    private void addBooks(Library lib, JSONObject jsonObject) {
+    // EFFECTS: returns list of books parsed from jsonArray
+    private List<Book> getBooks(JSONArray jsonArray) {
+        List<Book> books = new ArrayList<>();
+        for (Object json: jsonArray) {
+            books.add(parseBook((JSONObject) json));
+        }
 
+        return books;
     }
 
     // EFFECTS: parses book from JSON object and returns it
     private Book parseBook(JSONObject jsonObject) {
-        return null;
+        String title = jsonObject.getString("title");
+        String author = jsonObject.getString("author");
+        String genre = jsonObject.getString("genre");
+        Boolean isBorrowed = jsonObject.getBoolean("isBorrowed");
+        List<Review> reviews = getReviews(jsonObject.getJSONArray("reviews"));
+        return new Book(title, genre, author, isBorrowed, reviews);
     }
 
 
-    // EFFECTS: adds reviews to book from JSON object
-    private void addReviews(Book book, JSONObject jsonObject) {
+    // EFFECTS: returns list of reviews parsed from jsonArray
+    private List<Review> getReviews(JSONArray jsonArray) {
+        List<Review> reviews = new ArrayList<>();
+        for (Object json: jsonArray) {
+            reviews.add(parseReview((JSONObject) json));
+        }
 
+        return reviews;
     }
 
     // EFFECTS: parses review from JSON object and returns it
     private Review parseReview(JSONObject jsonObject) {
-        return null;
+        String book = jsonObject.getString("book");
+        String member = jsonObject.getString("member");
+        int rating = jsonObject.getInt("rating");
+        String comment = jsonObject.getString("comment");
+        return new Review(book,member,rating,comment);
     }
 
 
-    // EFFECTS: adds members to library from JSON object
-    private void addMembers(Library lib, JSONObject jsonObject) {
+    // EFFECTS: returns list of members parsed from jsonArray
+    private List<Member> getMembers(JSONArray jsonArray,List<Book> books) {
+        List<Member> members = new ArrayList<>();
+        for (Object json: jsonArray) {
+            members.add(parseMember((JSONObject) json, books));
+        }
 
+        return members;
     }
 
     // EFFECTS: parses member from JSON object and returns it
-    private Member parseMember(JSONObject json, List<Book> booksList) {
-        return null;
+    private Member parseMember(JSONObject jsonObject, List<Book> books) {
+        String name = jsonObject.getString("name");
+        List<Book> borrowedBooks = parseMemberBooks(jsonObject.getJSONArray("borrowedBooks"), books);
+        List<Review> reviews = getReviews(jsonObject.getJSONArray("reviews"));
+        List<Transaction> transactions = getTransactions(jsonObject.getJSONArray("transactions"));
+        return new Member(name,borrowedBooks,reviews,transactions);
     }
 
-    // EFFECTS: adds books to m's currently borrowed list from index relative to booksList in jsonObject
-    private void addMemberBooks(Member m, JSONObject jsonObject, List<Book> booksList) {
-
+    // EFFECTS: returns list of book corresponding to members book list index
+    private List<Book> parseMemberBooks(JSONArray jsonArray, List<Book> booksList) {
+        List<Book> membersBooks = new ArrayList<>();
+        for (Object json: jsonArray) {
+            membersBooks.add(booksList.get((int)json));
+        }
+        return membersBooks;
     }
 
     // EFFECTS: adds transactions to library from JSON object
-    private void addTransactions(Library lib, JSONObject jsonObject) {
-
-    }
-
-    // EFFECTS: adds transactions to member from JSON object
-    private void addTransactions(Member m, JSONObject jsonObject) {
-
+    private List<Transaction> getTransactions(JSONArray jsonArray) {
+        List<Transaction> transactions = new ArrayList<>();
+        for (Object json: jsonArray) {
+            transactions.add(parseTransaction((JSONObject) json));
+        }
+        return transactions;
     }
 
     // EFFECTS: parses transaction from JSON object and returns it
     private Transaction parseTransaction(JSONObject jsonObject) {
-        return null;
+        String book = jsonObject.getString("book");
+        String member = jsonObject.getString("member");
+        return (new Transaction(book, member));
     }
 
 

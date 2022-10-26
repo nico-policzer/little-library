@@ -1,7 +1,9 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
 
+import java.io.IOException;
 import java.util.*;
 
 // SOURCES:
@@ -57,8 +59,13 @@ public class LibraryApp {
     // EFFECTS: intializes library with books and members
     private void initializeLibrary() {
         List<Book> initialBooks = initialzeBooks();
-        lib = new Library("Nico's Library", initialBooks);
-
+        //lib = new Library("Nico's Library", initialBooks);
+        JsonReader reader = new JsonReader("./data/fullLibraryTest.json");
+        try {
+            lib = reader.read();
+        } catch (IOException e) {
+            System.err.println("COULDNT FIND FILE");
+        }
         Member m1 = new Member("Georges Vanier");
         Member m2 = new Member("H.P Deeves");
         Member m3 = new Member("Nico P");

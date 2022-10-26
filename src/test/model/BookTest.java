@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BookTest {
@@ -44,6 +47,19 @@ public class BookTest {
         assertEquals(b2.getGenre(),"War");
         assertEquals(b2.getTitle(), "The Wars");
         assertFalse(b2.isBorrowed());
+    }
+    @Test
+    public void testBookFullConstructor() {
+        List<Review> reviews = new ArrayList<Review>();
+        reviews.add(r1);
+        reviews.add(r2);
+        Book b0 = new Book("King Leopolds Ghost", "History", "Adam Hochschild",
+                true, reviews);
+        assertEquals(b0.getAuthor(), "Adam Hochschild");
+        assertEquals(b0.getGenre(),"History");
+        assertEquals(b0.getTitle(), "King Leopolds Ghost");
+        assertTrue(b0.isBorrowed());
+        assertEquals(b0.getReviews(),reviews);
     }
 
     @Test
