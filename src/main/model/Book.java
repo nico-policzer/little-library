@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book {
+public class Book implements Writeable {
     // BOOK: A book with a title, genre, author, reviews, average rating
     // and information about whether it is being borrowed or not
     private final String genre;
@@ -80,5 +84,27 @@ public class Book {
             rating += review.getRating();
         }
         return rating / reviews.size();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", this.title);
+        json.put("genre", this.genre);
+        json.put("author", this.author);
+        json.put("isBorrowed", this.isBorrowed);
+        json.put("reviews", reviewsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns reviews for book as a JSON array
+    private JSONArray reviewsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Review r : reviews) {
+            jsonArray.put(r.toJson());
+        }
+
+        return jsonArray;
     }
 }

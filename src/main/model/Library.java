@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library {
+public class Library implements Writeable {
     // LIBRARY: A library with a name,  with a collection of books,
     // the ability to borrow books, register books and return books
     private List<Book> books;
@@ -131,5 +135,46 @@ public class Library {
     }
 
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", this.name);
+        json.put("books", booksToJson());
+        json.put("members", membersToJson());
+        json.put("transactions",transactionsToJson());
+        return json;
+    }
 
+    // EFFECTS: returns members transactions as a JSON array
+    private JSONArray booksToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Book b: books) {
+            jsonArray.put(b.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns members transactions as a JSON array
+    private JSONArray membersToJson() {
+        JSONArray jsonArray = new JSONArray();
+        // removes admin member, doesn't  need to be added.
+        for (int i = 1; i < members.size(); i++) {
+            jsonArray.put(members.get(i).toJson(this));
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns members transactions as a JSON array
+    private JSONArray transactionsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Transaction t : transactions) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
+    }
 }

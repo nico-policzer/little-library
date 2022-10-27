@@ -1,6 +1,5 @@
 package persistence;
 
-
 import model.Book;
 import model.Library;
 import model.Member;
@@ -12,9 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-class JsonReaderTest extends JsonTest {
+public class JsonWriterTest extends JsonTest {
+
 
     private Library lib;
     private Book b0;
@@ -43,6 +44,7 @@ class JsonReaderTest extends JsonTest {
         b3 = new Book("Stalingrad", "War", "Antony Beevor");
         b4 = new Book("The Sun also Rises", "Classic", "Ernest Hemingway");
         b5 = new Book("The Blank Slate", "Science", "Steven Pinker");
+        b6 = new Book("Paris 1919", "History", "Margaret Macmillan");
         b7 = new Book("Art of War", "Classic", "Sun Tzu");
         b8 = new Book("Crime and Punishment", "Classic", "Fyodor Dostoevsky");
 
@@ -60,9 +62,10 @@ class JsonReaderTest extends JsonTest {
         // will have to add some reviews and such to books b5+
         // will have to add books and such to members to test
     }
+
     @Test
-    void testReaderNonExistentFile() {
-        JsonReader reader = new JsonReader("./data/noSuchFile.json");
+    void testWriterNonExistentFile() {
+        JsonReader reader = new JsonReader("\"./data/my\\0illegal:fileName.json");
         try {
             Library lib = reader.read();
             fail("IOException expected");
@@ -72,38 +75,46 @@ class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testEmptyLibrary() {
-        Library loadedLib = null;
-        JsonReader reader = new JsonReader("./data/readerTestEmptyLibrary.json");
+    void testWriterEmptyLibrary() {
         try {
-            loadedLib = reader.read();
+            Library lib = new Library("TestWriterLibrary", new ArrayList<>());
+            JsonWriter writer = new JsonWriter("./data/writerTestEmptyLibrary.json");
+            writer.open();
+            writer.write(lib);
+            writer.close();
 
+            JsonReader reader = new JsonReader("./data/writerTestEmptyLibrary.json");
+            Library loadedLib = reader.read();
+            sameLibrary(loadedLib, lib);
         } catch (IOException e) {
-            fail("Couldn't find file");
+            fail("Exception should not have been thrown");
         }
-        sameLibrary(lib,loadedLib);
     }
 
     @Test
-    void testSomeBooksNoMembersLibrary() {
-        JsonReader reader = new JsonReader("./data/readerTestSomeBooks.json");
+    void testWriterSomeBooksNoMembersLibrary() {
         Library loadedLib = null;
-        try {
-            loadedLib = reader.read();
-        } catch (IOException e) {
-            fail("Couldn't find file");
-        }
+        lib.registerBook(b5);
+        lib.registerBook(b6);
+        lib.registerBook(b7);
+        lib.registerBook(b8);
         lib.registerBook(b0);
-        lib.registerBook(b1);
-        lib.registerBook(b2);
-        lib.registerBook(b3);
-        lib.registerBook(b4);
-        sameLibrary(lib,loadedLib);
-        // may have to override equals to use assertEquals in this case
+        try {
+            JsonWriter writer = new JsonWriter("./data/writerTestSomeBooksLibrary.json");
+            writer.open();
+            writer.write(lib);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/writerTestSomeBooksLibrary.json");
+            loadedLib = reader.read();
+            sameLibrary(loadedLib, lib);
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
     }
 
     @Test
-    void testSomeBooksSomeMembersLibrary() {
+    void testWriterSomeBooksSomeMembersLibrary() {
         lib.registerBook(b0);
         lib.registerBook(b1);
         lib.registerBook(b2);
@@ -113,23 +124,25 @@ class JsonReaderTest extends JsonTest {
         lib.registerMember(m1);
         lib.registerMember(m2);
         lib.registerMember(m3);
-        lib.borrowBook(b0,m1);
-        lib.borrowBook(b1,m1);
-        lib.borrowBook(b3,m3);
+        lib.borrowBook(b0, m1);
+        lib.borrowBook(b1, m1);
+        lib.borrowBook(b3, m3);
         Library loadedLib = null;
-        JsonReader reader = new JsonReader("./data/readerTestSomeBooksAndMembers.json");
         try {
+            JsonWriter writer = new JsonWriter("./data/writerTestSomeBooksAndMembers.json");
+            writer.open();
+            writer.write(lib);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/writerTestSomeBooksAndMembers.json");
             loadedLib = reader.read();
+            sameLibrary(loadedLib, lib);
         } catch (IOException e) {
             fail("Couldn't find file");
         }
-        sameLibrary(lib,loadedLib);
+        sameLibrary(lib, loadedLib);
     }
-    // ADD TEST EXAMPLES FOR BOOKS WITH REVIEWS AND ON LOAN, MEMBERS WITH NOTHING AND MEMBERS WITH BORROWING BOOKS
-    // ALSO MEMBERS WITH TRANSACTIONS, LOok in apple notes to find data design
 
-    // TO TEST:
-    // READ FROM TEST FILE
     @Test
     void testFullLibrary() {
         lib.registerBook(b0);
@@ -145,21 +158,28 @@ class JsonReaderTest extends JsonTest {
         lib.registerMember(m3);
 
         lib.borrowBook(b4, m1);
-        lib.returnBook(b4,m1);
+        lib.returnBook(b4, m1);
 
         lib.borrowBook(b2, m2);
-        lib.returnBook(b2,m2);
+        lib.returnBook(b2, m2);
         m2.leaveReview(b2, new Review(b2, m2, 3, "Great read!"));
 
-        lib.borrowBook(b0,m1);
-        lib.borrowBook(b1,m1);
-        lib.borrowBook(b3,m3);
-        JsonReader reader = new JsonReader("./data/readerTestFullLibrary.json");
+        lib.borrowBook(b0, m1);
+        lib.borrowBook(b1, m1);
+        lib.borrowBook(b3, m3);
         try {
+            JsonWriter writer = new JsonWriter("./data/writerTestFullLibrary.json");
+            writer.open();
+            writer.write(lib);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/writerTestFullLibrary.json");
             loadedLib = reader.read();
+            sameLibrary(loadedLib, lib);
         } catch (IOException e) {
             fail("Couldn't find file");
         }
-        sameLibrary(lib,loadedLib);
+        sameLibrary(lib, loadedLib);
+
     }
 }

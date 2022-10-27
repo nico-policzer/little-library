@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +88,49 @@ public class Member {
     // EFFECTS: returns false to reflect that the member is not an admin member
     public boolean isAdmin() {
         return false;
+    }
+
+
+    public JSONObject toJson(Library lib) {
+        JSONObject json = new JSONObject();
+        json.put("name", this.name);
+        json.put("borrowedBooks", booksToJson(lib));
+        json.put("reviews", reviewsToJson());
+        json.put("transactions",transactionsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns reviews for book as a JSON array
+    private JSONArray reviewsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Review r : reviews) {
+            jsonArray.put(r.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns members currently borrowed books as a list of indexes to books in library
+    private JSONArray booksToJson(Library lib) {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Book b : borrowedBooks) {
+            jsonArray.put(lib.getBooks().indexOf(b));
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns members transactions as a JSON array
+    private JSONArray transactionsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Transaction t : transactions) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
     }
 
 

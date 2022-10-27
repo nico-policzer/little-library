@@ -2,7 +2,9 @@ package ui;
 
 import model.*;
 import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -59,13 +61,8 @@ public class LibraryApp {
     // EFFECTS: intializes library with books and members
     private void initializeLibrary() {
         List<Book> initialBooks = initialzeBooks();
-        //lib = new Library("Nico's Library", initialBooks);
-        JsonReader reader = new JsonReader("./data/fullLibraryTest.json");
-        try {
-            lib = reader.read();
-        } catch (IOException e) {
-            System.err.println("COULDNT FIND FILE");
-        }
+        lib = new Library("Nico's Library", initialBooks);
+
         Member m1 = new Member("Georges Vanier");
         Member m2 = new Member("H.P Deeves");
         Member m3 = new Member("Nico P");
@@ -109,7 +106,15 @@ public class LibraryApp {
     // EFFECTS: initializes library, starts login menu, and directs logged-in user to proper menu(admin or main)
     private void runLibrary() {
         boolean run = true;
-        initializeLibrary();
+        JsonReader reader = new JsonReader("./data/myLibrary.json");
+        try {
+            lib = reader.read();
+        } catch (IOException e) {
+            System.err.println("COULDNT FIND FILE");
+        }
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+        //initializeLibrary();
         while (run) {
             run =  logOnMenu();
             if (!run) {
@@ -128,6 +133,15 @@ public class LibraryApp {
     private void end() {
         System.out.println("\nThanks for visiting!");
         input.close();
+        JsonWriter writer = new JsonWriter("./data/myLibrary.json");
+        try {
+            writer.open();
+            writer.write(lib);
+            writer.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("Couldn't find file!");
+        }
+
     }
 
     // LOG IN MENU METHODS:
