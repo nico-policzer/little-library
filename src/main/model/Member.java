@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.Writeable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +90,7 @@ public class Member {
     }
 
 
+    // EFFECTS: returns member as a JSON object
     public JSONObject toJson(Library lib) {
         JSONObject json = new JSONObject();
         json.put("name", this.name);
@@ -100,7 +100,7 @@ public class Member {
         return json;
     }
 
-    // EFFECTS: returns reviews for book as a JSON array
+    // EFFECTS: returns reviews left by member as a JSON array
     private JSONArray reviewsToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -111,7 +111,7 @@ public class Member {
         return jsonArray;
     }
 
-    // EFFECTS: returns members currently borrowed books as a list of indexes to books in library
+    // EFFECTS: returns this members currently borrowed books as a list of indexes to books in lib.getBooks()
     private JSONArray booksToJson(Library lib) {
         JSONArray jsonArray = new JSONArray();
 

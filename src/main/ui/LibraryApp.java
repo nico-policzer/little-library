@@ -4,7 +4,7 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -29,6 +29,12 @@ public class LibraryApp {
     private Scanner input;
     // COMMANDS:
     private static final String UNKNOWN_COMMAND_MESSAGE = "\tUnrecognized command, please try a different command";
+
+    private static final String SAVE_COMMAND = "yes";
+    private static final String DONT_SAVE_COMMAND = "no";
+    private static final String NEW_LIBRARY_COMMAND = "new";
+    private static final String LOAD_LIBRARY_COMMAND = "load";
+    private static final String DEFAULT_LIBRARY_COMMAND = "default";
     // LOG IN MENU COMMANDS
     private static final String REGISTER_MEMBER_COMMAND = "register";
     private static final String SIGN_IN_COMMAND = "sign in";
@@ -58,10 +64,10 @@ public class LibraryApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: intializes library with books and members
-    private void initializeLibrary() {
+    // EFFECTS: intializes library of name name with books and members
+    private Library defaultLibrary(String name) {
         List<Book> initialBooks = initialzeBooks();
-        lib = new Library("Nico's Library", initialBooks);
+        Library lib = new Library(name, initialBooks);
 
         Member m1 = new Member("Georges Vanier");
         Member m2 = new Member("H.P Deeves");
@@ -71,15 +77,15 @@ public class LibraryApp {
         lib.registerMember(m2);
         lib.registerMember(m3);
 
-        lib.borrowBook(initialBooks.get(0),m2);
-        lib.returnBook(initialBooks.get(0),m2);
-        lib.borrowBook(initialBooks.get(8),m3);
-        lib.returnBook(initialBooks.get(8),m3);
+        lib.borrowBook(initialBooks.get(0), m2);
+        lib.returnBook(initialBooks.get(0), m2);
+        lib.borrowBook(initialBooks.get(8), m3);
+        lib.returnBook(initialBooks.get(8), m3);
         m3.leaveReview(initialBooks.get(8), new Review(initialBooks.get(8), m1,
                 2, "Way to convoluted. Characters have four names each, impossible to follow"));
         m2.leaveReview(initialBooks.get(0), new Review(initialBooks.get(0), m2, 5, "Book changed my life."));
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
+
+        return lib;
     }
 
     // EFFECTS: initializes the initial catalogue of books
@@ -98,49 +104,37 @@ public class LibraryApp {
         Book b11 = new Book("The Iliad", "Classic", "Homer");
         Book b12 = new Book("Meditations", "Self-Help", "Marcus Aurelius");
         List<Book> initialBooks = new ArrayList<Book>(Arrays.asList(
-                                    b0,b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12));
+                b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12));
         return initialBooks;
     }
+
 
     // MODIFIES: this
     // EFFECTS: initializes library, starts login menu, and directs logged-in user to proper menu(admin or main)
     private void runLibrary() {
-        boolean run = true;
-        JsonReader reader = new JsonReader("./data/myLibrary.json");
-        try {
-            lib = reader.read();
-        } catch (IOException e) {
-            System.err.println("COULDNT FIND FILE");
-        }
         input = new Scanner(System.in);
         input.useDelimiter("\n");
-        //initializeLibrary();
+        boolean run = true;
+        lib = loadMenu();
         while (run) {
-            run =  logOnMenu();
+            run = logOnMenu();
             if (!run) {
-             // skips to end
+                // skips to end
             } else if (member.isAdmin()) {
                 adminMenu();
             } else {
                 mainMenu();
             }
         }
+        handleSave();
         end();
     }
 
     // MODIFIES: this
     // EFFECTS: prints goodbye message, closes input
     private void end() {
-        System.out.println("\nThanks for visiting!");
+        System.out.println("\nCome back soon!");
         input.close();
-        JsonWriter writer = new JsonWriter("./data/myLibrary.json");
-        try {
-            writer.open();
-            writer.write(lib);
-            writer.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("Couldn't find file!");
-        }
 
     }
 
@@ -189,7 +183,7 @@ public class LibraryApp {
     private boolean handleRegister() {
         System.out.println("\nPlease enter your name to register:");
         String memberName = capitalize(getUserInputString());
-        Member registeredMember =  new Member(memberName);
+        Member registeredMember = new Member(memberName);
         if (lib.registerMember(registeredMember)) {
             System.out.println("Registering " + memberName + " to " + lib.getName());
             member = registeredMember;
@@ -215,7 +209,7 @@ public class LibraryApp {
     private boolean handleSignIn() {
         displaySignInMenu();
         String memberName = getUserInputString();
-        for (Member m: lib.getMembers()) {
+        for (Member m : lib.getMembers()) {
             if (Objects.equals(memberName, makePrettyString(m.getName()))) {
                 member = m;
                 return true;
@@ -270,7 +264,7 @@ public class LibraryApp {
             String newTitle = input.nextLine();
             // cannot register books with title "back" as it would interfere with commands during search and returns
             boolean validTitle = !makePrettyString(newTitle).equals(BACK_COMMAND);
-            for (Book book: lib.getBooks()) {
+            for (Book book : lib.getBooks()) {
                 if (makePrettyString(newTitle).equals(makePrettyString(book.getTitle()))) {
                     validTitle = false;
                 }
@@ -282,11 +276,11 @@ public class LibraryApp {
                 String genre = capitalize(getUserInputString());
                 lib.registerBook(new Book(newTitle, genre, author));
                 System.out.println("Registering " + newTitle
-                                    + " by " + author + " at "
-                                    + lib.getName() + " under " + genre);
+                        + " by " + author + " at "
+                        + lib.getName() + " under " + genre);
             } else {
                 System.out.println("\tWe cannot register this book as we already have"
-                                    + " a book of that title, or the title is invalid");
+                        + " a book of that title, or the title is invalid");
             }
         }
     }
@@ -294,7 +288,7 @@ public class LibraryApp {
     // EFFECTS: displays all librarys transactions(books that have been returned)
     private void handleViewTransactions() {
         System.out.println("\n" + lib.getName() + " transaction history");
-        for (Transaction transaction: lib.getTransactions()) {
+        for (Transaction transaction : lib.getTransactions()) {
             System.out.println(transaction.getMember() + " : " + transaction.getBook());
         }
     }
@@ -409,11 +403,11 @@ public class LibraryApp {
             System.out.println("No currently available titles, please come back later");
         }
         List<String> availableTitles = new ArrayList<String>();
-        for (Book book: lib.getAvailableBooks()) {
+        for (Book book : lib.getAvailableBooks()) {
             availableTitles.add(book.getTitle());
         }
         Collections.sort(availableTitles);
-        for (String title: availableTitles) {
+        for (String title : availableTitles) {
             System.out.println("- " + title);
         }
     }
@@ -437,17 +431,17 @@ public class LibraryApp {
         List<String> availableAuthors = findAvailableAuthors();
         Collections.sort(availableAuthors);
         // finds and prints all the authors and their books(only ones not currently borrowed)
-        for (String author: availableAuthors) {
+        for (String author : availableAuthors) {
             System.out.println(author);
             List<String> availableTitlesByAuthor = new ArrayList<String>();
-            for (Book book: lib.getAvailableBooks()) {
+            for (Book book : lib.getAvailableBooks()) {
                 if (book.getAuthor().equals(author)) {
                     availableTitlesByAuthor.add(book.getTitle());
                 }
             }
             // sort method will sort list semi alphabetically
             Collections.sort(availableTitlesByAuthor);
-            for (String title: availableTitlesByAuthor) {
+            for (String title : availableTitlesByAuthor) {
                 System.out.println("- " + title);
             }
         }
@@ -466,9 +460,9 @@ public class LibraryApp {
     // EFFECTS: returns a list of all the authors at lib who have books that are currently able to be borrowed
     private List<String> findAvailableAuthors() {
         List<String> availableAuthors = new ArrayList<String>();
-        for (String author: lib.getAuthors()) {
+        for (String author : lib.getAuthors()) {
             int i = 0;
-            for (Book book: lib.getAvailableBooks()) {
+            for (Book book : lib.getAvailableBooks()) {
                 if (book.getAuthor().equals(author)) {
                     i++;
                 }
@@ -488,16 +482,16 @@ public class LibraryApp {
         }
         List<String> availableGenres = findAvailableGenres();
         Collections.sort(availableGenres);
-        for (String genre: availableGenres) {
+        for (String genre : availableGenres) {
             System.out.println(genre);
             List<String> availableTitlesByGenre = new ArrayList<String>();
-            for (Book book: lib.getAvailableBooks()) {
+            for (Book book : lib.getAvailableBooks()) {
                 if (book.getGenre().equals(genre)) {
                     availableTitlesByGenre.add(book.getTitle());
                 }
             }
             Collections.sort(availableTitlesByGenre);
-            for (String title: availableTitlesByGenre) {
+            for (String title : availableTitlesByGenre) {
                 System.out.println("- " + title);
             }
         }
@@ -516,9 +510,9 @@ public class LibraryApp {
     // EFFECTS: returns a list of all the genres at lib who have books that are currently able to be borrowed
     private List<String> findAvailableGenres() {
         List<String> availableGenres = new ArrayList<String>();
-        for (String genre: lib.getGenres()) {
+        for (String genre : lib.getGenres()) {
             int i = 0;
-            for (Book book: lib.getAvailableBooks()) {
+            for (Book book : lib.getAvailableBooks()) {
                 if (book.getGenre().equals(genre)) {
                     i++;
                 }
@@ -555,17 +549,17 @@ public class LibraryApp {
         String command;
         while (viewing) {
             displayBookMenu(book);
-            command =  getUserInputString();
+            command = getUserInputString();
             switch (command) {
-                case(BACK_COMMAND):
+                case (BACK_COMMAND):
                     viewing = false;
                     break;
-                case(BORROW_BOOK_COMMAND):
+                case (BORROW_BOOK_COMMAND):
                     lib.borrowBook(book, member);
                     System.out.println("Member " + member.getName() + " borrowed " + book.getTitle());
                     viewing = false;
                     break;
-                case(VIEW_RATINGS_COMMAND):
+                case (VIEW_RATINGS_COMMAND):
                     displayReviews(book);
                     break;
                 default:
@@ -580,7 +574,7 @@ public class LibraryApp {
         if (book.getReviews().isEmpty()) {
             System.out.println("No ratings/reviews have been left for this book.");
         }
-        for (Review review: book.getReviews()) {
+        for (Review review : book.getReviews()) {
             System.out.println(review.getMember()
                     + " gave " + review.getRating() + " out of 5 stars");
             System.out.println("\t" + "\"" + review.getComment() + "\"");
@@ -660,8 +654,138 @@ public class LibraryApp {
     // EFFECTS: prints out members currently borrowed books
     private void displayBorrowedBooks() {
         System.out.println("\n" + member.getName() + "'s currently borrowed books:");
-        for (Book book: member.getBorrowedBooks()) {
+        for (Book book : member.getBorrowedBooks()) {
             System.out.println("- " + book.getTitle());
+        }
+    }
+
+    // PERSISTENCE METHODS(SAVING AND LOADING)
+
+    // EFFECTS: handles menu for loading library from a file, or choosing a default starting library. or a new empty one
+    private Library loadMenu() {
+        while (true) {
+            Library loadedLibrary = null;
+            displayLoadMenu();
+            String command = getUserInputString();
+            if (command.length() > 0) {
+                switch (command) {
+                    case NEW_LIBRARY_COMMAND:
+                        loadedLibrary = handleNewLibrary(false);
+                        break;
+                    case LOAD_LIBRARY_COMMAND:
+                        loadedLibrary = handleLoadLibrary();
+                        break;
+                    case DEFAULT_LIBRARY_COMMAND:
+                        loadedLibrary = handleNewLibrary(true);
+                        break;
+                    default:
+                        System.out.println(UNKNOWN_COMMAND_MESSAGE);
+                }
+                if (!(loadedLibrary == null)) {
+                    return loadedLibrary;
+                }
+            }
+        }
+    }
+
+    // EFFECTS: displays load menu with instructions
+    private void displayLoadMenu() {
+        System.out.println("\nWelcome to the library app!");
+        System.out.println(NEW_LIBRARY_COMMAND + ": name and create a new empty library");
+        System.out.println(LOAD_LIBRARY_COMMAND + ": load an exisiting saved library");
+        System.out.println(DEFAULT_LIBRARY_COMMAND + ": name and then load a library with some books and members");
+    }
+
+    // EFFECTS: handles the loading of the library from saves in data/user.
+    private Library handleLoadLibrary() {
+        System.out.println("\nPlease enter name of library to load from list below");
+        File userSaves = new File("./data/user");
+        String[] contents = userSaves.list();
+        ArrayList<String> fileNames = new ArrayList<>();
+        for (int i = 0; i < contents.length; i++) {
+            fileNames.add(contents[i]);
+        }
+        while (true) {
+            for (String fileName : fileNames) {
+                System.out.println("\t " + fileName.replaceAll(".json", ""));
+            }
+            if (input.hasNext()) {
+                String loadLibrary = input.nextLine();
+                try {
+                    JsonReader reader = new JsonReader("./data/user/" + loadLibrary + ".json");
+                    Library lib = reader.read();
+                    System.out.println("\nLoading library... ");
+                    return lib;
+                } catch (IOException e) {
+                    System.out.println("\nNo such library exists, please input library from the list below.");
+                }
+            }
+
+        }
+    }
+
+    // EFFECTS: prompts user for name, if defaultSetUp, creates a library with some books and members
+    // else, creates an empty library.
+    private Library handleNewLibrary(boolean defaultSetUp) {
+        System.out.println("\nPlease enter the name of the library!");
+        File userSaves = new File("./data/user");
+        String[] contents = userSaves.list();
+        ArrayList<String> fileNames = new ArrayList<>();
+        for (int i = 0; i < contents.length; i++) {
+            fileNames.add(makePrettyString(contents[i]));
+        }
+        while (true) {
+            if (input.hasNext()) {
+                String newLibrary = input.nextLine();
+                if (!fileNames.contains(newLibrary + ".json")) {
+                    System.out.println("\nCreating new library " + newLibrary);
+                    if (defaultSetUp) {
+                        return defaultLibrary(newLibrary);
+                    } else {
+                        return new Library(newLibrary, new ArrayList<>());
+                    }
+                }
+                System.out.println("\nThere already exists a library of that name, please input a different name.");
+
+            }
+        }
+    }
+
+
+    // EFFECTS: prompts user to decide if they would like to save, and processes save.
+    private void handleSave() {
+        boolean run = true;
+        while (run) {
+            System.out.println("Would you like to save?");
+            String command = getUserInputString();
+            if (command.length() > 0) {
+                switch (command) {
+                    case SAVE_COMMAND:
+                        saveLibrary();
+                        run = false;
+                        break;
+                    case DONT_SAVE_COMMAND:
+                        run = false;
+                        break;
+                    default:
+                        System.out.println(UNKNOWN_COMMAND_MESSAGE);
+                }
+            }
+        }
+
+    }
+
+    // EFFECTS: writes library to JSON and saves in data/user/LIBRARYNAME.json, where LIBRARYNAME is the libraries name.
+    // Overwrites any previously saved librarys with this name.
+    private void saveLibrary() {
+        JsonWriter writer = new JsonWriter("./data/user/" + lib.getName() + ".json");
+        try {
+            writer.open();
+            writer.write(lib);
+            writer.close();
+            System.out.println("Saved.");
+        } catch (IOException e) {
+            System.err.println("ERROR: COULDN'T SAVE");
         }
     }
 
@@ -706,4 +830,6 @@ public class LibraryApp {
         }
         return String.valueOf(charArray);
     }
+
+
 }

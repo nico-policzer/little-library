@@ -22,17 +22,10 @@ class JsonReaderTest extends JsonTest {
     private Book b2;
     private Book b3;
     private Book b4;
-    private Book b5;
-    private Book b6;
-    private Book b7;
-    private Book b8;
-    private List<Book> books;
     private Member m1;
     private Member m2;
     private Member m3;
-    private Member m4;
-    private Member m5;
-    private Member admin;
+
 
     @BeforeEach
     public void setUp() {
@@ -42,23 +35,13 @@ class JsonReaderTest extends JsonTest {
         b2 = new Book("Violeta: se fue a los cielos", "Foreign Language", "Angel Parra");
         b3 = new Book("Stalingrad", "War", "Antony Beevor");
         b4 = new Book("The Sun also Rises", "Classic", "Ernest Hemingway");
-        b5 = new Book("The Blank Slate", "Science", "Steven Pinker");
-        b7 = new Book("Art of War", "Classic", "Sun Tzu");
-        b8 = new Book("Crime and Punishment", "Classic", "Fyodor Dostoevsky");
+
 
         m1 = new Member("D. Fiddle");
         m2 = new Member("G. Foreman");
 
         m3 = new Member("J. Johnson");
-        m4 = new Member("L. Johnson");
-        m5 = new Member("L. Johnson");
 
-
-        admin = lib.getMembers().get(0);
-
-
-        // will have to add some reviews and such to books b5+
-        // will have to add books and such to members to test
     }
     @Test
     void testReaderNonExistentFile() {
@@ -99,7 +82,6 @@ class JsonReaderTest extends JsonTest {
         lib.registerBook(b3);
         lib.registerBook(b4);
         sameLibrary(lib,loadedLib);
-        // may have to override equals to use assertEquals in this case
     }
 
     @Test
@@ -125,11 +107,7 @@ class JsonReaderTest extends JsonTest {
         }
         sameLibrary(lib,loadedLib);
     }
-    // ADD TEST EXAMPLES FOR BOOKS WITH REVIEWS AND ON LOAN, MEMBERS WITH NOTHING AND MEMBERS WITH BORROWING BOOKS
-    // ALSO MEMBERS WITH TRANSACTIONS, LOok in apple notes to find data design
 
-    // TO TEST:
-    // READ FROM TEST FILE
     @Test
     void testFullLibrary() {
         lib.registerBook(b0);

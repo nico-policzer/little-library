@@ -2,12 +2,11 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.Writeable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book implements Writeable {
+public class Book {
     // BOOK: A book with a title, genre, author, reviews, average rating
     // and information about whether it is being borrowed or not
     private final String genre;
@@ -86,7 +85,8 @@ public class Book implements Writeable {
         return rating / reviews.size();
     }
 
-    @Override
+
+    // EFFECTS: returns book as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("title", this.title);

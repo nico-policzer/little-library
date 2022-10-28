@@ -1,9 +1,8 @@
 package model;
 
 import org.json.JSONObject;
-import persistence.Writeable;
 
-public class Review implements Writeable {
+public class Review {
     // REVIEW: A book review with a star rating from 1-5, a comment,
     // and the name of the member who left the review and the title of the book it is about.
 
@@ -47,7 +46,8 @@ public class Review implements Writeable {
         return bookTitle;
     }
 
-    @Override
+
+    // EFFECTS: returns review as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("book", this.bookTitle);

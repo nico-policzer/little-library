@@ -58,9 +58,6 @@ public class JsonWriterTest extends JsonTest {
 
         admin = lib.getMembers().get(0);
 
-
-        // will have to add some reviews and such to books b5+
-        // will have to add books and such to members to test
     }
 
     @Test
@@ -93,12 +90,13 @@ public class JsonWriterTest extends JsonTest {
 
     @Test
     void testWriterSomeBooksNoMembersLibrary() {
-        Library loadedLib = null;
+
         lib.registerBook(b5);
         lib.registerBook(b6);
         lib.registerBook(b7);
         lib.registerBook(b8);
         lib.registerBook(b0);
+        Library loadedLib = null;
         try {
             JsonWriter writer = new JsonWriter("./data/writerTestSomeBooksLibrary.json");
             writer.open();
@@ -107,10 +105,10 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/writerTestSomeBooksLibrary.json");
             loadedLib = reader.read();
-            sameLibrary(loadedLib, lib);
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
+        sameLibrary(loadedLib, lib);
     }
 
     @Test
@@ -136,7 +134,6 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/writerTestSomeBooksAndMembers.json");
             loadedLib = reader.read();
-            sameLibrary(loadedLib, lib);
         } catch (IOException e) {
             fail("Couldn't find file");
         }
@@ -145,13 +142,12 @@ public class JsonWriterTest extends JsonTest {
 
     @Test
     void testFullLibrary() {
+
         lib.registerBook(b0);
         lib.registerBook(b1);
         lib.registerBook(b2);
         lib.registerBook(b3);
         lib.registerBook(b4);
-
-        Library loadedLib = null;
 
         lib.registerMember(m1);
         lib.registerMember(m2);
@@ -167,6 +163,7 @@ public class JsonWriterTest extends JsonTest {
         lib.borrowBook(b0, m1);
         lib.borrowBook(b1, m1);
         lib.borrowBook(b3, m3);
+        Library loadedLib = null;
         try {
             JsonWriter writer = new JsonWriter("./data/writerTestFullLibrary.json");
             writer.open();
@@ -175,7 +172,6 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/writerTestFullLibrary.json");
             loadedLib = reader.read();
-            sameLibrary(loadedLib, lib);
         } catch (IOException e) {
             fail("Couldn't find file");
         }

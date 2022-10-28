@@ -2,12 +2,11 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.Writeable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library implements Writeable {
+public class Library {
     // LIBRARY: A library with a name,  with a collection of books,
     // the ability to borrow books, register books and return books
     private List<Book> books;
@@ -15,7 +14,6 @@ public class Library implements Writeable {
     private String name;
     private List<Transaction> transactions;
 
-    // REQUIRES: books is non empty list
     // EFFECTS: creates a library with a name and list of books, and a member named "admin"
     public Library(String name, List<Book> books) {
         this.books = books;
@@ -135,7 +133,8 @@ public class Library implements Writeable {
     }
 
 
-    @Override
+
+    // EFFECTS: returns library as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", this.name);
