@@ -1,0 +1,169 @@
+{
+    "books": [
+        {
+            "reviews": [{
+                "book": "The Four Agreements",
+                "member": "H.P Deeves",
+                "rating": 5,
+                "comment": "Book changed my life."
+            }],
+            "author": "Don Miguel Ruiz",
+            "genre": "Self-Help",
+            "title": "The Four Agreements",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Sun Tzu",
+            "genre": "Classic",
+            "title": "Art of War",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Steven Pinker",
+            "genre": "Science",
+            "title": "The Blank Slate",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Charles Dickens",
+            "genre": "Classic",
+            "title": "A tale of Two Cities",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Angel Parra",
+            "genre": "Foreign Language",
+            "title": "Violeta: se fue a los cielos",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Antony Beevor",
+            "genre": "War",
+            "title": "Stalingrad",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Ernest Hemingway",
+            "genre": "Classic",
+            "title": "The Sun also Rises",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [{
+                "book": "Crime and Punishment",
+                "member": "Georges Vanier",
+                "rating": 4,
+                "comment": "It was pretty good i'd say"
+            }],
+            "author": "Fyodor Dostoevsky",
+            "genre": "Classic",
+            "title": "Crime and Punishment",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [{
+                "book": "Brothers Karamazov",
+                "member": "Georges Vanier",
+                "rating": 2,
+                "comment": "Way to convoluted. Characters have four names each, impossible to follow"
+            }],
+            "author": "Fyodor Dostoevsky",
+            "genre": "Classic",
+            "title": "Brothers Karamazov",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "J.R.R Tolkien",
+            "genre": "Fantasy",
+            "title": "The Lord of the Rings: Return of the King",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "J.R.R Tolkien",
+            "genre": "Fantasy",
+            "title": "The Hobbit",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Homer",
+            "genre": "Classic",
+            "title": "The Iliad",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Marcus Aurelius",
+            "genre": "Self-Help",
+            "title": "Meditations",
+            "isBorrowed": false
+        }
+    ],
+    "members": [
+        {
+            "reviews": [{
+                "book": "Crime and Punishment",
+                "member": "Georges Vanier",
+                "rating": 4,
+                "comment": "It was pretty good i'd say"
+            }],
+            "borrowedBooks": [],
+            "name": "Georges Vanier",
+            "transactions": [{
+                "book": "Crime and Punishment",
+                "member": "Georges Vanier"
+            }]
+        },
+        {
+            "reviews": [{
+                "book": "The Four Agreements",
+                "member": "H.P Deeves",
+                "rating": 5,
+                "comment": "Book changed my life."
+            }],
+            "borrowedBooks": [],
+            "name": "H.P Deeves",
+            "transactions": [{
+                "book": "The Four Agreements",
+                "member": "H.P Deeves"
+            }]
+        },
+        {
+            "reviews": [{
+                "book": "Brothers Karamazov",
+                "member": "Georges Vanier",
+                "rating": 2,
+                "comment": "Way to convoluted. Characters have four names each, impossible to follow"
+            }],
+            "borrowedBooks": [],
+            "name": "Nico P",
+            "transactions": [{
+                "book": "Brothers Karamazov",
+                "member": "Nico P"
+            }]
+        }
+    ],
+    "name": "Test Library",
+    "transactions": [
+        {
+            "book": "The Four Agreements",
+            "member": "H.P Deeves"
+        },
+        {
+            "book": "Brothers Karamazov",
+            "member": "Nico P"
+        },
+        {
+            "book": "Crime and Punishment",
+            "member": "Georges Vanier"
+        }
+    ]
+}

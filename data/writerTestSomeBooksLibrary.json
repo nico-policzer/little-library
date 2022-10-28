@@ -1,0 +1,42 @@
+{
+    "books": [
+        {
+            "reviews": [],
+            "author": "Steven Pinker",
+            "genre": "Science",
+            "title": "The Blank Slate",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Margaret Macmillan",
+            "genre": "History",
+            "title": "Paris 1919",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Sun Tzu",
+            "genre": "Classic",
+            "title": "Art of War",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Fyodor Dostoevsky",
+            "genre": "Classic",
+            "title": "Crime and Punishment",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Fyodor Dostoevsky",
+            "genre": "Classic",
+            "title": "Brothers Karamazov",
+            "isBorrowed": false
+        }
+    ],
+    "members": [],
+    "name": "TEST LIBRARY",
+    "transactions": []
+}

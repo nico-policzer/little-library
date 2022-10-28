@@ -1,0 +1,89 @@
+{
+    "books": [
+        {
+            "reviews": [],
+            "author": "Fyodor Dostoevsky",
+            "genre": "Classic",
+            "title": "Brothers Karamazov",
+            "isBorrowed": true
+        },
+        {
+            "reviews": [],
+            "author": "Charles Dickens",
+            "genre": "Classic",
+            "title": "A Tale of Two Cities",
+            "isBorrowed": true
+        },
+        {
+            "reviews": [{
+                "book": "Violeta: se fue a los cielos",
+                "member": "G. Foreman",
+                "rating": 3,
+                "comment": "Great read!"
+            }],
+            "author": "Angel Parra",
+            "genre": "Foreign Language",
+            "title": "Violeta: se fue a los cielos",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Antony Beevor",
+            "genre": "War",
+            "title": "Stalingrad",
+            "isBorrowed": true
+        },
+        {
+            "reviews": [],
+            "author": "Ernest Hemingway",
+            "genre": "Classic",
+            "title": "The Sun also Rises",
+            "isBorrowed": false
+        }
+    ],
+    "members": [
+        {
+            "reviews": [],
+            "borrowedBooks": [
+                0,
+                1
+            ],
+            "name": "D. Fiddle",
+            "transactions": [{
+                "book": "The Sun also Rises",
+                "member": "D. Fiddle"
+            }]
+        },
+        {
+            "reviews": [{
+                "book": "Violeta: se fue a los cielos",
+                "member": "G. Foreman",
+                "rating": 3,
+                "comment": "Great read!"
+            }],
+            "borrowedBooks": [],
+            "name": "G. Foreman",
+            "transactions": [{
+                "book": "Violeta: se fue a los cielos",
+                "member": "G. Foreman"
+            }]
+        },
+        {
+            "reviews": [],
+            "borrowedBooks": [3],
+            "name": "J. Johnson",
+            "transactions": []
+        }
+    ],
+    "name": "TEST LIBRARY",
+    "transactions": [
+        {
+            "book": "The Sun also Rises",
+            "member": "D. Fiddle"
+        },
+        {
+            "book": "Violeta: se fue a los cielos",
+            "member": "G. Foreman"
+        }
+    ]
+}

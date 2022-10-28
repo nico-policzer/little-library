@@ -1,0 +1,64 @@
+{
+    "books": [
+        {
+            "reviews": [],
+            "author": "Fyodor Dostoevsky",
+            "genre": "Classic",
+            "title": "Brothers Karamazov",
+            "isBorrowed": true
+        },
+        {
+            "reviews": [],
+            "author": "Charles Dickens",
+            "genre": "Classic",
+            "title": "A Tale of Two Cities",
+            "isBorrowed": true
+        },
+        {
+            "reviews": [],
+            "author": "Angel Parra",
+            "genre": "Foreign Language",
+            "title": "Violeta: se fue a los cielos",
+            "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "Antony Beevor",
+            "genre": "War",
+            "title": "Stalingrad",
+            "isBorrowed": true
+        },
+        {
+            "reviews": [],
+            "author": "Ernest Hemingway",
+            "genre": "Classic",
+            "title": "The Sun also Rises",
+            "isBorrowed": false
+        }
+    ],
+    "members": [
+        {
+            "reviews": [],
+            "borrowedBooks": [
+                0,
+                1
+            ],
+            "name": "D. Fiddle",
+            "transactions": []
+        },
+        {
+            "reviews": [],
+            "borrowedBooks": [],
+            "name": "G. Foreman",
+            "transactions": []
+        },
+        {
+            "reviews": [],
+            "borrowedBooks": [3],
+            "name": "J. Johnson",
+            "transactions": []
+        }
+    ],
+    "name": "TEST LIBRARY",
+    "transactions": []
+}
