@@ -15,7 +15,7 @@ import java.util.*;
 // - Used makePrettyString and getUserInputString, as well as inspiration for menu design using switch statements
 
 
-public class LibraryApp {
+public class LibraryTextApp {
 
     // LIBRARY APP: runs the library UI, text based. User's can access various menus, starting by signing in
     // then accessing the main menu, which allows users to access book search functionality, return books and leave
@@ -59,7 +59,7 @@ public class LibraryApp {
     private static final String CANCEL_COMMAND = "cancel";
 
     // EFFECTS: Begins running the library application
-    public LibraryApp() {
+    public LibraryTextApp() {
         runLibrary();
     }
 
@@ -299,7 +299,7 @@ public class LibraryApp {
     private void displayMainMenu() {
         System.out.println("\n\t\t" + lib.getName() + " Main Menu - " + member.getName());
         System.out.println(SEARCH_BOOK_COMMAND + ": search through catalogue to borrow a book");
-        System.out.println(RETURN_BOOK_COMMAND + ": seturn books you've previously borrowed");
+        System.out.println(RETURN_BOOK_COMMAND + ": return books you've previously borrowed");
         System.out.println(MEMBER_PROFILE_COMMAND + ": view member profile");
         System.out.println(LOG_OUT_COMMAND + ": log out");
     }

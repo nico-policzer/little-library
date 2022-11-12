@@ -17,7 +17,7 @@
             "author": "Sun Tzu",
             "genre": "Classic",
             "title": "Art of War",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [],
@@ -38,21 +38,21 @@
             "author": "Angel Parra",
             "genre": "Foreign Language",
             "title": "Violeta: se fue a los cielos",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [],
             "author": "Antony Beevor",
             "genre": "War",
             "title": "Stalingrad",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [],
             "author": "Ernest Hemingway",
             "genre": "Classic",
             "title": "The Sun also Rises",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [{
@@ -64,7 +64,7 @@
             "author": "Fyodor Dostoevsky",
             "genre": "Classic",
             "title": "Crime and Punishment",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [{
@@ -93,7 +93,12 @@
             "isBorrowed": false
         },
         {
-            "reviews": [],
+            "reviews": [{
+                "book": "The Iliad",
+                "member": "Nico P",
+                "rating": 4,
+                "comment": "liked it."
+            }],
             "author": "Homer",
             "genre": "Classic",
             "title": "The Iliad",
@@ -115,12 +120,29 @@
                 "rating": 4,
                 "comment": "It was pretty good i'd say"
             }],
-            "borrowedBooks": [],
+            "borrowedBooks": [
+                4,
+                7
+            ],
             "name": "Georges Vanier",
-            "transactions": [{
-                "book": "Crime and Punishment",
-                "member": "Georges Vanier"
-            }]
+            "transactions": [
+                {
+                    "book": "Crime and Punishment",
+                    "member": "Georges Vanier"
+                },
+                {
+                    "book": "A tale of Two Cities",
+                    "member": "Georges Vanier"
+                },
+                {
+                    "book": "Brothers Karamazov",
+                    "member": "Georges Vanier"
+                },
+                {
+                    "book": "The Blank Slate",
+                    "member": "Georges Vanier"
+                }
+            ]
         },
         {
             "reviews": [{
@@ -137,18 +159,38 @@
             }]
         },
         {
-            "reviews": [{
-                "book": "Brothers Karamazov",
-                "member": "Georges Vanier",
-                "rating": 2,
-                "comment": "Way to convoluted. Characters have four names each, impossible to follow"
-            }],
+            "reviews": [
+                {
+                    "book": "Brothers Karamazov",
+                    "member": "Georges Vanier",
+                    "rating": 2,
+                    "comment": "Way to convoluted. Characters have four names each, impossible to follow"
+                },
+                {
+                    "book": "The Iliad",
+                    "member": "Nico P",
+                    "rating": 4,
+                    "comment": "liked it."
+                }
+            ],
             "borrowedBooks": [],
             "name": "Nico P",
-            "transactions": [{
-                "book": "Brothers Karamazov",
-                "member": "Nico P"
-            }]
+            "transactions": [
+                {
+                    "book": "Brothers Karamazov",
+                    "member": "Nico P"
+                },
+                {
+                    "book": "The Iliad",
+                    "member": "Nico P"
+                }
+            ]
+        },
+        {
+            "reviews": [],
+            "borrowedBooks": [6],
+            "name": "Steven",
+            "transactions": []
         }
     ],
     "name": "Test Library",
@@ -163,6 +205,30 @@
         },
         {
             "book": "Crime and Punishment",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "The Iliad",
+            "member": "Nico P"
+        },
+        {
+            "book": "The Lord of the Rings: Return of the King",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "A tale of Two Cities",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "A tale of Two Cities",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "Brothers Karamazov",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "The Blank Slate",
             "member": "Georges Vanier"
         }
     ]
