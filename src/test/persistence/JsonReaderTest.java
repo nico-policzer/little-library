@@ -45,7 +45,7 @@ class JsonReaderTest extends JsonTest {
     }
     @Test
     void testReaderNonExistentFile() {
-        JsonReader reader = new JsonReader("./data/noSuchFile.json");
+        JsonReader reader = new JsonReader("./data/test/noSuchFile.json");
         try {
             Library lib = reader.read();
             fail("IOException expected");
@@ -57,7 +57,7 @@ class JsonReaderTest extends JsonTest {
     @Test
     void testEmptyLibrary() {
         Library loadedLib = null;
-        JsonReader reader = new JsonReader("./data/readerTestEmptyLibrary.json");
+        JsonReader reader = new JsonReader("./data/test/readerTestEmptyLibrary.json");
         try {
             loadedLib = reader.read();
 
@@ -69,7 +69,7 @@ class JsonReaderTest extends JsonTest {
 
     @Test
     void testSomeBooksNoMembersLibrary() {
-        JsonReader reader = new JsonReader("./data/readerTestSomeBooks.json");
+        JsonReader reader = new JsonReader("./data/test/readerTestSomeBooks.json");
         Library loadedLib = null;
         try {
             loadedLib = reader.read();
@@ -99,7 +99,7 @@ class JsonReaderTest extends JsonTest {
         lib.borrowBook(b1,m1);
         lib.borrowBook(b3,m3);
         Library loadedLib = null;
-        JsonReader reader = new JsonReader("./data/readerTestSomeBooksAndMembers.json");
+        JsonReader reader = new JsonReader("./data/test/readerTestSomeBooksAndMembers.json");
         try {
             loadedLib = reader.read();
         } catch (IOException e) {
@@ -132,7 +132,7 @@ class JsonReaderTest extends JsonTest {
         lib.borrowBook(b0,m1);
         lib.borrowBook(b1,m1);
         lib.borrowBook(b3,m3);
-        JsonReader reader = new JsonReader("./data/readerTestFullLibrary.json");
+        JsonReader reader = new JsonReader("./data/test/readerTestFullLibrary.json");
         try {
             loadedLib = reader.read();
         } catch (IOException e) {

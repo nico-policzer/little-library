@@ -31,7 +31,7 @@
             "author": "Charles Dickens",
             "genre": "Classic",
             "title": "A tale of Two Cities",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [],
@@ -64,7 +64,7 @@
             "author": "Fyodor Dostoevsky",
             "genre": "Classic",
             "title": "Crime and Punishment",
-            "isBorrowed": true
+            "isBorrowed": false
         },
         {
             "reviews": [{
@@ -90,7 +90,7 @@
             "author": "J.R.R Tolkien",
             "genre": "Fantasy",
             "title": "The Hobbit",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [{
@@ -122,7 +122,8 @@
             }],
             "borrowedBooks": [
                 4,
-                7
+                10,
+                3
             ],
             "name": "Georges Vanier",
             "transactions": [
@@ -140,6 +141,22 @@
                 },
                 {
                     "book": "The Blank Slate",
+                    "member": "Georges Vanier"
+                },
+                {
+                    "book": "Crime and Punishment",
+                    "member": "Georges Vanier"
+                },
+                {
+                    "book": "Violeta: se fue a los cielos",
+                    "member": "Georges Vanier"
+                },
+                {
+                    "book": "The Lord of the Rings: Return of the King",
+                    "member": "Georges Vanier"
+                },
+                {
+                    "book": "A tale of Two Cities",
                     "member": "Georges Vanier"
                 }
             ]
@@ -229,6 +246,22 @@
         },
         {
             "book": "The Blank Slate",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "Crime and Punishment",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "Violeta: se fue a los cielos",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "The Lord of the Rings: Return of the King",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "A tale of Two Cities",
             "member": "Georges Vanier"
         }
     ]

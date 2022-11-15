@@ -75,12 +75,12 @@ public class JsonWriterTest extends JsonTest {
     void testWriterEmptyLibrary() {
         try {
             Library lib = new Library("TestWriterLibrary", new ArrayList<>());
-            JsonWriter writer = new JsonWriter("./data/writerTestEmptyLibrary.json");
+            JsonWriter writer = new JsonWriter("./data/test/writerTestEmptyLibrary.json");
             writer.open();
             writer.write(lib);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/writerTestEmptyLibrary.json");
+            JsonReader reader = new JsonReader("./data/test/writerTestEmptyLibrary.json");
             Library loadedLib = reader.read();
             sameLibrary(loadedLib, lib);
         } catch (IOException e) {
@@ -98,12 +98,12 @@ public class JsonWriterTest extends JsonTest {
         lib.registerBook(b0);
         Library loadedLib = null;
         try {
-            JsonWriter writer = new JsonWriter("./data/writerTestSomeBooksLibrary.json");
+            JsonWriter writer = new JsonWriter("./data/test/writerTestSomeBooksLibrary.json");
             writer.open();
             writer.write(lib);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/writerTestSomeBooksLibrary.json");
+            JsonReader reader = new JsonReader("./data/test/writerTestSomeBooksLibrary.json");
             loadedLib = reader.read();
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -127,12 +127,12 @@ public class JsonWriterTest extends JsonTest {
         lib.borrowBook(b3, m3);
         Library loadedLib = null;
         try {
-            JsonWriter writer = new JsonWriter("./data/writerTestSomeBooksAndMembers.json");
+            JsonWriter writer = new JsonWriter("./data/test/writerTestSomeBooksAndMembers.json");
             writer.open();
             writer.write(lib);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/writerTestSomeBooksAndMembers.json");
+            JsonReader reader = new JsonReader("./data/test/writerTestSomeBooksAndMembers.json");
             loadedLib = reader.read();
         } catch (IOException e) {
             fail("Couldn't find file");
@@ -165,12 +165,12 @@ public class JsonWriterTest extends JsonTest {
         lib.borrowBook(b3, m3);
         Library loadedLib = null;
         try {
-            JsonWriter writer = new JsonWriter("./data/writerTestFullLibrary.json");
+            JsonWriter writer = new JsonWriter("./data/test/writerTestFullLibrary.json");
             writer.open();
             writer.write(lib);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/writerTestFullLibrary.json");
+            JsonReader reader = new JsonReader("./data/test/writerTestFullLibrary.json");
             loadedLib = reader.read();
         } catch (IOException e) {
             fail("Couldn't find file");
