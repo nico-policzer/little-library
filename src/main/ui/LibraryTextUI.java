@@ -15,7 +15,7 @@ import java.util.*;
 // - Used makePrettyString and getUserInputString, as well as inspiration for menu design using switch statements
 
 
-public class LibraryTextApp {
+public class LibraryTextUI {
 
     // LIBRARY APP: runs the library UI, text based. User's can access various menus, starting by signing in
     // then accessing the main menu, which allows users to access book search functionality, return books and leave
@@ -59,7 +59,7 @@ public class LibraryTextApp {
     private static final String CANCEL_COMMAND = "cancel";
 
     // EFFECTS: Begins running the library application
-    public LibraryTextApp() {
+    public LibraryTextUI() {
         runLibrary();
     }
 
@@ -696,7 +696,7 @@ public class LibraryTextApp {
                 if (!fileNames.contains(newLibrary + ".json")) {
                     System.out.println("\nCreating new library " + newLibrary);
                     if (defaultSetUp) {
-                        return Library.defaultLibrary(newLibrary);
+                        return LibraryInitializer.defaultLibrary(newLibrary);
                     } else {
                         return new Library(newLibrary, new ArrayList<>());
                     }

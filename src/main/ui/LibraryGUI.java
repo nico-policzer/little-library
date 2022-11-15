@@ -418,7 +418,7 @@ public class LibraryGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String name = input.getText();
             if (name.length() != 0) {
-                lib = Library.defaultLibrary(name);
+                lib = LibraryInitializer.defaultLibrary(name);
                 user = lib.getMembers().get(1);
                 mainMenu();
             }
