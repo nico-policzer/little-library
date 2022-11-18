@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class LibraryInitializer {
+    // a class with methods to initialize a library with some default books, members and reviews
 
     // EFFECTS: initializes library of name "name" with books and members
     public static Library defaultLibrary(String name) {

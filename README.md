@@ -31,13 +31,13 @@ The project also provides a fun challenge, with the functionality for users to l
 NOTE: To access the admin menu to register books and view the libraries' history, please sign in as member "admin"
 
 
-# Instructions for Grader
+# Instructions for Grader - Phase 3
 * Run Main.main()
 * Select "Create a new library with a default set of books"
 * Input a name for your library(doesn't matter what it is)
 
-- You can generate the first required event related to adding Xs to a Y by clicking "Register Book", then inputting the title, author and genre of a book. After clicking register, to see this book you can click "Search" in the main menu.
+- You can generate the first required event related to adding Xs to a Y by clicking "Register a new book", then inputting the title, author and genre of a book. After clicking register, to see this book you can click "Search" in the main menu.
 - You can generate the second required event related to adding Xs to a Y by clicking "Search" in the main menu, then clicking on the title of any book, and clicking "Borrow". Use the windows X buttons to exit from the confirmation screen and the search screen and return to the menu.
-- You can locate my visual component by (from the main menu) first clicking "Return". You will then see books you have previously borrowed and can return, click one. If there are none, repeat the previous step.
+- You can locate my visual component by (from the main menu) first clicking "Return". You will then see books you have previously borrowed and can return, click one. If there are none, repeat the above step.
 - You can save the state of my application by (from the main menu), selecting "Quit", then "Yes"
 - You can reload the state of my application by, (directly after running main) selecting "Load from a previous library" on the opening menu, then selecting the library you created. You should see the book you added present in either "Search" or "Return"(depending on whether you returned it)

@@ -44,10 +44,8 @@ public class LibraryGUI extends JFrame {
     private static final String MENU_TEXT = "Please choose an option below";
     private static final String REGISTER_BOOK_LABEL = "Register a new book";
 
-    private static final File BORROWED_IMAGE = new File(
-            "/Users/nicopoliczer/Desktop/CPSC 210/project_s3j3k/data/images/borrowed.png");
-    private static final File RETURNED_IMAGE = new File(
-            "/Users/nicopoliczer/Desktop/CPSC 210/project_s3j3k/data/images/returned.png");
+    private static final File BORROWED_IMAGE = new File("data/images/borrowed.png");
+    private static final File RETURNED_IMAGE = new File("data/images/returned.png");
 
     private JDialog dialog;
     private Library lib;
@@ -215,7 +213,6 @@ public class LibraryGUI extends JFrame {
         loadPanel.add(loadButton);
         loadPanel.add(newLibraryButton);
         setContentPane(loadPanel);
-
     }
 
     // MODIFIES: this
@@ -280,7 +277,7 @@ public class LibraryGUI extends JFrame {
     // HELPERS:
 
     // EFFECTS: writes library to JSON and saves in data/user/LIBRARYNAME.json, where LIBRARYNAME is the libraries name.
-    // Overwrites any previously saved librarys with this name.
+    // Overwrites any previously saved libraries with this name.
     private void saveLibrary() {
         JsonWriter writer = new JsonWriter("./data/user/" + lib.getName() + ".json");
         try {
@@ -565,6 +562,7 @@ public class LibraryGUI extends JFrame {
 
     private class MenuClickHandler implements ActionListener {
         // Click handler for buttons in main menu.
+        // Function corresponds to which button it is acting as the action listener for.
 
         private static final int SEARCH_BUTTON_FUNCTION = 0;
         private static final int QUIT_BUTTON_FUNCTION = 1;

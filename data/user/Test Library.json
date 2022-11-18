@@ -31,7 +31,7 @@
             "author": "Charles Dickens",
             "genre": "Classic",
             "title": "A tale of Two Cities",
-            "isBorrowed": true
+            "isBorrowed": false
         },
         {
             "reviews": [],
@@ -83,7 +83,7 @@
             "author": "J.R.R Tolkien",
             "genre": "Fantasy",
             "title": "The Lord of the Rings: Return of the King",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [],
@@ -123,7 +123,7 @@
             "borrowedBooks": [
                 4,
                 10,
-                3
+                9
             ],
             "name": "Georges Vanier",
             "transactions": [
@@ -153,6 +153,10 @@
                 },
                 {
                     "book": "The Lord of the Rings: Return of the King",
+                    "member": "Georges Vanier"
+                },
+                {
+                    "book": "A tale of Two Cities",
                     "member": "Georges Vanier"
                 },
                 {
@@ -258,6 +262,10 @@
         },
         {
             "book": "The Lord of the Rings: Return of the King",
+            "member": "Georges Vanier"
+        },
+        {
+            "book": "A tale of Two Cities",
             "member": "Georges Vanier"
         },
         {
