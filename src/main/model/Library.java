@@ -37,6 +37,7 @@ public class Library {
     // EFFECTS: adds book to librarys collection
     public void registerBook(Book book) {
         books.add(book);
+        EventLog.getInstance().logEvent(new Event(book.getTitle() + " was registered to " + this.name));
     }
 
     // EFFECTS: returns transaction history, ordered from least to most recent
@@ -50,6 +51,7 @@ public class Library {
     public void borrowBook(Book book, Member member) {
         book.borrowBook();
         member.borrowBook(book);
+        EventLog.getInstance().logEvent(new Event(member.getName() + " borrowed " + book.getTitle() + " from " + name));
     }
 
     // REQUIRES: book has been previously borrowed by member, member is registered in library
@@ -61,6 +63,8 @@ public class Library {
         member.returnBook(book);
         member.addTransaction(t);
         transactions.add(t);
+        EventLog.getInstance().logEvent(new Event(member.getName() + " returned " + book.getTitle() + " to " + name));
+
 
     }
 

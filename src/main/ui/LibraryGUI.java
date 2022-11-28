@@ -1,6 +1,8 @@
 package ui;
 
 import model.Book;
+import model.Event;
+import model.EventLog;
 import model.Library;
 import model.Member;
 import persistence.JsonReader;
@@ -12,9 +14,12 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LibraryGUI extends JFrame {
@@ -55,6 +60,7 @@ public class LibraryGUI extends JFrame {
     public LibraryGUI() {
         super("LibraryGUI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUpWindowListener();
         setLayout(new BorderLayout());
         loadMenu();
         setVisible(true);
@@ -368,6 +374,25 @@ public class LibraryGUI extends JFrame {
         dialog.dispose();
     }
 
+    // EFFECTS: adds window listener to this frame to call closeGUI on window close
+    private void setUpWindowListener() {
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                closeGUI();
+            }
+        });
+    }
+
+    // EFFECTS: closes GUI and prints current log to console
+    private void closeGUI() {
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        for (Iterator<Event> it = events; it.hasNext(); ) {
+            Event event = it.next();
+            System.out.println(event.toString());
+        }
+        dispose();
+    }
 
     // CLICK HANDLERS
 
@@ -493,7 +518,7 @@ public class LibraryGUI extends JFrame {
             if (function == SAVE_FUNCTION) {
                 saveLibrary();
             }
-            System.exit(0);
+            closeGUI();
         }
     }
 

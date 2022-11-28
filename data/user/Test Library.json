@@ -64,7 +64,7 @@
             "author": "Fyodor Dostoevsky",
             "genre": "Classic",
             "title": "Crime and Punishment",
-            "isBorrowed": false
+            "isBorrowed": true
         },
         {
             "reviews": [{
@@ -110,6 +110,13 @@
             "genre": "Self-Help",
             "title": "Meditations",
             "isBorrowed": false
+        },
+        {
+            "reviews": [],
+            "author": "asdf",
+            "genre": "asdf",
+            "title": "asdf",
+            "isBorrowed": false
         }
     ],
     "members": [
@@ -123,7 +130,8 @@
             "borrowedBooks": [
                 4,
                 10,
-                9
+                9,
+                7
             ],
             "name": "Georges Vanier",
             "transactions": [

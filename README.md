@@ -41,3 +41,31 @@ NOTE: To access the admin menu to register books and view the libraries' history
 - You can locate my visual component by (from the main menu) first clicking "Return". You will then see books you have previously borrowed and can return, click one. If there are none, repeat the above step.
 - You can save the state of my application by (from the main menu), selecting "Quit", then "Yes"
 - You can reload the state of my application by, (directly after running main) selecting "Load from a previous library" on the opening menu, then selecting the library you created. You should see the book you added present in either "Search" or "Return"(depending on whether you returned it)
+
+# Phase 4 - Task 2 - Sample of events
+
+Mon Nov 28 13:28:56 PST 2022
+GUI Admin User borrowed TestBook from Nico's Library
+Mon Nov 28 13:28:59 PST 2022
+GUI Admin User returned Violeta: se fue a los cielos to Nico's Library
+Mon Nov 28 13:29:49 PST 2022
+Vancouver: A Land Unknown was registered to Nico's Library
+Mon Nov 28 13:29:54 PST 2022
+GUI Admin User borrowed Vancouver: A Land Unknown from Nico's Library
+Mon Nov 28 13:29:58 PST 2022
+GUI Admin User returned Vancouver: A Land Unknown to Nico's Library
+Mon Nov 28 13:30:02 PST 2022
+GUI Admin User returned The Lord of the Rings: Return of the King to Nico's Library
+
+# Phase 4 - Task 3 - Reflection
+## Problems 
+- Library has too many responsibilities and low cohesion - it manages books, transactions and members
+- Member also is responsible for both reviews, borrowed books and transactions - low cohesion
+- Lots of coupling between various classes keeping lists that must be synchronized - ie Reviews in Book and Member
+## Refactoring
+* Introduce CatalogueManager to keep track of books, process book borrows, returns and registers and reduce coupling between library and member. Would also increase cohesion of both classes
+* Introduce TransactionLog which keeps track of transactions - all in one place - to reduce coupling between library and member and increase cohesion of both classes
+* Introduce MemberManager responsible for managing and registering members, to increase Library's cohesion.
+* Introduce ReviewManager which keeps track of creating reviews and storing them - all in one place - to reduce coupling between Book and member
+
+ 
