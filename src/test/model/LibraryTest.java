@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,6 +61,7 @@ public class LibraryTest {
 
         lib.registerMember(m1);
         lib.registerMember(m2);
+        EventLog.getInstance().clear();
     }
 
     @Test
@@ -295,6 +297,45 @@ public class LibraryTest {
         assertTrue(lib.getAvailableBooks().contains(b3));
         assertFalse(lib.getAvailableBooks().contains(b4));
         assertFalse(lib.getAvailableBooks().contains(b5));
+    }
+
+    @Test
+    public void testAddingEventOnRegister() {
+        lib.registerBook(new Book("The End", "Action", "Dorothy Biebers"));
+        Iterator<Event> eventIterator = EventLog.getInstance().iterator();
+        eventIterator.next();
+        assertEquals(eventIterator.next().getDescription(), "The End was registered to " + lib.getName());
+    }
+
+    @Test
+    public void testAddingEventOnBorrow() {
+        lib.borrowBook(b1, m1);
+        Iterator<Event> eventIterator = EventLog.getInstance().iterator();
+        eventIterator.next();
+        assertEquals(eventIterator.next().getDescription(), m1.getName() + " borrowed " + b1.getTitle() + " from " + lib.getName());
+    }
+
+    @Test
+    public void testAddingEventOnReturn() {
+        lib.borrowBook(b1, m1);
+        lib.returnBook(b1,m1);
+        Iterator<Event> eventIterator = EventLog.getInstance().iterator();
+        eventIterator.next();
+        eventIterator.next();
+        assertEquals(eventIterator.next().getDescription(), m1.getName() + " returned " + b1.getTitle() + " to " + lib.getName());
+    }
+
+    @Test
+    public void testMultipleRegisterEventsIntoLog() {
+        Book book = new Book("The Book: 2", "The Genre", "The Author");
+        lib.registerBook(book);
+        lib.borrowBook(book, m2);
+        lib.returnBook(book,m2);
+        Iterator<Event> eventIterator = EventLog.getInstance().iterator();
+        eventIterator.next();
+        assertEquals(eventIterator.next().getDescription(), book.getTitle() + " was registered to " + lib.getName());
+        assertEquals(eventIterator.next().getDescription(), m2.getName() + " borrowed " + book.getTitle() + " from " + lib.getName());
+        assertEquals(eventIterator.next().getDescription(), m2.getName() + " returned " + book.getTitle() + " to " + lib.getName());
     }
 
 

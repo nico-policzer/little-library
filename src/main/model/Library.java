@@ -24,7 +24,7 @@ public class Library {
         members.add(new AdminMember());
     }
 
-    // EFFECTS: creates a library with name, list of books, members, and transactions
+    // EFFECTS: creates a library with name, list of books, members, and transactions and one admin member
     public Library(String name, List<Book> books, List<Member> members, List<Transaction> transactions) {
         this.books = books;
         this.name = name;
@@ -34,7 +34,7 @@ public class Library {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds book to librarys collection
+    // EFFECTS: adds book to librarys collection and logs event to event log
     public void registerBook(Book book) {
         books.add(book);
         EventLog.getInstance().logEvent(new Event(book.getTitle() + " was registered to " + this.name));
@@ -47,7 +47,7 @@ public class Library {
 
     // REQUIRES: book is able to be borrowed, member is registered in library
     // MODIFIES: this, book, member
-    // EFFECTS: sets book to being borrowed, adds to members list of borrowed books
+    // EFFECTS: sets book to being borrowed, adds to members list of borrowed books, adds event to EventLog
     public void borrowBook(Book book, Member member) {
         book.borrowBook();
         member.borrowBook(book);
@@ -56,7 +56,8 @@ public class Library {
 
     // REQUIRES: book has been previously borrowed by member, member is registered in library
     // MODIFIES: this, book, member
-    // EFFECTS: sets book to not being borrowed, removes from members borrowed list and adds transactions
+    // EFFECTS: sets book to not being borrowed, removes from members borrowed list and
+    // adds transactions and updates EventLog
     public void returnBook(Book book, Member member) {
         Transaction t = new Transaction(book.getTitle(), member.getName());
         book.returnBook();
