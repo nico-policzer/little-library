@@ -42,18 +42,23 @@ NOTE: To access the admin menu to register books and view the libraries' history
 - You can save the state of my application by (from the main menu), selecting "Quit", then "Yes"
 - You can reload the state of my application by, (directly after running main) selecting "Load from a previous library" on the opening menu, then selecting the library you created. You should see the book you added present in either "Search" or "Return"(depending on whether you returned it)
 
-# Phase 4 - Task 2 - Sample of events
+# Phase 4 - Task 2 - Sample EventLog
 
 Mon Nov 28 13:28:56 PST 2022
 GUI Admin User borrowed TestBook from Nico's Library
+
 Mon Nov 28 13:28:59 PST 2022
 GUI Admin User returned Violeta: se fue a los cielos to Nico's Library
+
 Mon Nov 28 13:29:49 PST 2022
 Vancouver: A Land Unknown was registered to Nico's Library
+
 Mon Nov 28 13:29:54 PST 2022
 GUI Admin User borrowed Vancouver: A Land Unknown from Nico's Library
+
 Mon Nov 28 13:29:58 PST 2022
 GUI Admin User returned Vancouver: A Land Unknown to Nico's Library
+
 Mon Nov 28 13:30:02 PST 2022
 GUI Admin User returned The Lord of the Rings: Return of the King to Nico's Library
 
