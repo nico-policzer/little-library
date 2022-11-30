@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 // tests for event - from AlarmSystem
 public class EventTest {
 	private Event e;
-	private Date d;
 
 	@BeforeEach
 	public void runBefore() {
@@ -25,6 +24,6 @@ public class EventTest {
 
 	@Test
 	public void testToString() {
-		assertEquals(d.toString() + "\n" + "Sensor open at door", e.toString());
+		assertEquals(e.getDate().toString() + "\n" + "Sensor open at door", e.toString());
 	}
 }
