@@ -31,7 +31,7 @@ The project also provides a fun challenge, with the functionality for users to l
 NOTE: To access the admin menu to register books and view the libraries' history, please sign in as member "admin"
 
 
-# Instructions for Grader - Phase 3
+# Instructions for Running
 * Run Main.main()
 * Select "Create a new library with a default set of books"
 * Input a name for your library(doesn't matter what it is)
@@ -42,7 +42,7 @@ NOTE: To access the admin menu to register books and view the libraries' history
 - You can save the state of my application by (from the main menu), selecting "Quit", then "Yes"
 - You can reload the state of my application by, (directly after running main) selecting "Load from a previous library" on the opening menu, then selecting the library you created. You should see the book you added present in either "Search" or "Return"(depending on whether you returned it)
 
-# Phase 4 - Task 2 - Sample EventLog
+# Sample EventLog
 
 Mon Nov 28 13:28:56 PST 2022
 GUI Admin User borrowed TestBook from Nico's Library
@@ -62,7 +62,6 @@ GUI Admin User returned Vancouver: A Land Unknown to Nico's Library
 Mon Nov 28 13:30:02 PST 2022
 GUI Admin User returned The Lord of the Rings: Return of the King to Nico's Library
 
-# Phase 4 - Task 3 - Reflection
 ## Problems 
 - Library has too many responsibilities and low cohesion - it manages books, transactions and members
 - Member also is responsible for both reviews, borrowed books and transactions - low cohesion
