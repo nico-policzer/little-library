@@ -1,7 +1,10 @@
 ## little-library
 ## Set Up
-* To run the text based UI, run main on ./src/main/ui/LibraryTextUI.java
-* To run the GUI, run main on ./src/main/ui/LibraryGUI.java
+* To run the text based UI, run main on 
+* `./src/main/ui/LibraryTextUI.java`
+
+* To run the GUI, run main on 
+* `./src/main/ui/LibraryGUI.java`
 
 # GUI Functionality
 * Some textUI features are not implemented on the GUI
