@@ -1,6 +1,12 @@
-# Library
+## little-library
+## Set Up
+* To run the text based UI, run main on ./src/main/ui/LibraryTextUI.java
+* To run the GUI, run main on ./src/main/ui/LibraryGUI.java
 
-## Project Proposal
+# GUI Functionality
+* Some textUI features are not implemented on the GUI
+
+## Description
 
 This project is an application for a library system.
 
