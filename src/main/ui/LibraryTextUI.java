@@ -58,6 +58,9 @@ public class LibraryTextUI {
     // RETURN COMMANDS
     private static final String CANCEL_COMMAND = "cancel";
 
+    public static void main(String[] args) {
+        new LibraryTextUI();
+    }
     // EFFECTS: Begins running the library application
     public LibraryTextUI() {
         runLibrary();

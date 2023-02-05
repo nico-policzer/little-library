@@ -56,6 +56,11 @@ public class LibraryGUI extends JFrame {
     private Library lib;
     private Member user;
 
+    public static void main(String[] args) {
+        new LibraryGUI();
+    }
+
+
     // EFFECT: constructs the main window, starts load process
     public LibraryGUI() {
         super("LibraryGUI");
